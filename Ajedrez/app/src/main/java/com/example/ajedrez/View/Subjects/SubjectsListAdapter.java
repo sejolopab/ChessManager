@@ -1,4 +1,4 @@
-package com.example.ajedrez.View.Lessons;
+package com.example.ajedrez.View.Subjects;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,23 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ajedrez.Model.Lesson;
+import com.example.ajedrez.Model.Subject;
 import com.example.ajedrez.R;
-import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener;
+import com.example.ajedrez.View.Subjects.SubjectsListFragment.SubjectsListener;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Lesson} and makes a call to the
- * specified {@link LessonsListener}.
+ * {@link RecyclerView.Adapter} that can display a {@link Subject} and makes a call to the
+ * specified {@link SubjectsListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class LessonsListAdapter extends RecyclerView.Adapter<LessonsListAdapter.ViewHolder> {
+public class SubjectsListAdapter extends RecyclerView.Adapter<SubjectsListAdapter.ViewHolder> {
 
-    private final List<Lesson> mValues;
-    private final LessonsListener mListener;
+    private final List<Subject> mValues;
+    private final SubjectsListener mListener;
 
-    public LessonsListAdapter(List<Lesson> items, LessonsListener listener) {
+    public SubjectsListAdapter(List<Subject> items, SubjectsListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -30,16 +30,15 @@ public class LessonsListAdapter extends RecyclerView.Adapter<LessonsListAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_lessons_item, parent, false);
+                .inflate(R.layout.fragment_subjects_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Lesson lesson = mValues.get(position);
-        holder.mItem = lesson;
-        holder.mDate.setText(lesson.getDate());
-        holder.mAttendance.setText(String.valueOf(lesson.getAssistance()));
+        holder.mItem = mValues.get(position);
+        holder.mIdView.setText(mValues.get(position).getName());
+        holder.mContentView.setText("Holis");
 
         /*holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,20 +59,20 @@ public class LessonsListAdapter extends RecyclerView.Adapter<LessonsListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mDate;
-        public final TextView mAttendance;
-        public Lesson mItem;
+        public final TextView mIdView;
+        public final TextView mContentView;
+        public Subject mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mDate = view.findViewById(R.id.item_number);
-            mAttendance = view.findViewById(R.id.content);
+            mIdView = (TextView) view.findViewById(R.id.item_number);
+            mContentView = (TextView) view.findViewById(R.id.content);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mAttendance.getText() + "'";
+            return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
 }

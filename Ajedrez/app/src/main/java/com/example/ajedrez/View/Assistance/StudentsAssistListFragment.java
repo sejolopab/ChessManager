@@ -88,7 +88,6 @@ public class StudentsAssistListFragment extends Fragment {
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                //AssistanceListAdapter.AssistanceViewHolder myViewHolder = ()viewHolder;
                 int position = viewHolder.getAdapterPosition();
                 Assistance tStudent = assistanceList.get(position);
 
@@ -102,7 +101,6 @@ public class StudentsAssistListFragment extends Fragment {
                 }
 
                 adapter.notifyDataSetChanged();
-                //AlertsManager.getInstance().showAlertDialog("Alert", String.valueOf(swipeDir), getContext());
             }
         });
         itemTouchHelper.attachToRecyclerView(recyclerView);

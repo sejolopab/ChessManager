@@ -30,8 +30,7 @@
             android:layout_marginRight="16dp"
             app:layoutManager="LinearLayoutManager"
             tools:context=".View.Assistance.StudentsAssistListFragment"
-            tools:listitem="@layout/fragment_assistance_item"
-            android:clipToPadding="false"/>
+            tools:listitem="@layout/fragment_assistance_item" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

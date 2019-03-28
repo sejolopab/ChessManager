@@ -28,7 +28,7 @@ public class DataManager {
         subjects.add(new Subject("Finales"));
 
         List<Assistance> assists = new ArrayList<>();
-        Assistance assistance = new Assistance(students.get(0),new ArrayList<Subject>() {{ add(subjects.get(0)); }});
+        Assistance assistance = new Assistance(students.get(0),subjects);
         assists.add(assistance);
 
         String date = getDateTime();
@@ -53,7 +53,7 @@ public class DataManager {
     }
 
     private String getDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh a");
         Date date = new Date();
         return dateFormat.format(date);
     }

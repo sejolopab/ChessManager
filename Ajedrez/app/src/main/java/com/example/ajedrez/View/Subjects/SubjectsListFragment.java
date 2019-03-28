@@ -1,4 +1,4 @@
-package com.example.ajedrez.View.Lessons;
+package com.example.ajedrez.View.Subjects;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,54 +12,51 @@ import android.view.ViewGroup;
 
 import com.example.ajedrez.Data.DataManager;
 import com.example.ajedrez.R;
-import com.example.ajedrez.View.Assistance.AssistanceListAdapter;
 import com.example.ajedrez.View.MainActivity;
 
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link LessonsListener}
+ * Activities containing this fragment MUST implement the {@link SubjectsListener}
  * interface.
  */
-public class LessonsListFragment extends Fragment {
+public class SubjectsListFragment extends Fragment {
 
-    private LessonsListener mListener;
     private RecyclerView recyclerView;
-    private LessonsListAdapter adapter;
+    private SubjectsListAdapter adapter;
+    private SubjectsListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public LessonsListFragment() {
+    public SubjectsListFragment() {
+    }
+    public static SubjectsListFragment newInstance() {
+        return new SubjectsListFragment();
     }
 
     public void setListener (MainActivity activity) {
-        this.mListener = activity;
-    }
-
-    public static LessonsListFragment newInstance() {
-        return new LessonsListFragment();
+        mListener = activity;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lessons_list, container, false);
-        recyclerView = view.findViewById(R.id.lessonsList);
+        View view = inflater.inflate(R.layout.fragment_subjects_list, container, false);
+        recyclerView = view.findViewById(R.id.subjectsList);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new LessonsListAdapter(DataManager.getInstance().getLessons(), mListener);
+        adapter = new SubjectsListAdapter(DataManager.getInstance().getSubjects(), mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         //adapter.setOnClickListener(this);
@@ -75,6 +72,6 @@ public class LessonsListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface LessonsListener {
+    public interface SubjectsListener {
     }
 }

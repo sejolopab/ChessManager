@@ -8,14 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ajedrez.Model.Assistance;
-import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.Assistance.StudentsAssistListFragment.StudentsAssistanceListener;
 
 import java.util.List;
-
-import static android.graphics.Color.GREEN;
-import static android.graphics.Color.RED;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link } and makes a call to the
@@ -43,18 +39,18 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
     public void onBindViewHolder(final AssistanceViewHolder holder, int position) {
         Assistance studentAssistance = mAssistance.get(position);
         holder.mItem = studentAssistance;
-        holder.mIdView.setText(studentAssistance.getStudent().getName());
-        holder.mContentView.setText(studentAssistance.getStudent().getSchool());
+        holder.mStudentName.setText(studentAssistance.getStudent().getName());
+        holder.mStudentSchool.setText(studentAssistance.getStudent().getSchool());
 
         if (studentAssistance.assisted == null) {
         } else if (studentAssistance.assisted) {
             holder.mView.setBackgroundResource(R.color.colorDarkGreen);
-            holder.mIdView.setTextColor(Color.WHITE);
-            holder.mContentView.setTextColor(Color.WHITE);
+            holder.mStudentName.setTextColor(Color.WHITE);
+            holder.mStudentSchool.setTextColor(Color.WHITE);
         } else {
             holder.mView.setBackgroundResource(R.color.colorDarkRed);
-            holder.mIdView.setTextColor(Color.WHITE);
-            holder.mContentView.setTextColor(Color.WHITE);
+            holder.mStudentName.setTextColor(Color.WHITE);
+            holder.mStudentSchool.setTextColor(Color.WHITE);
         }
 
         /*holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -74,34 +70,22 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
         return mAssistance.size();
     }
 
-    public void setBackground() {
-
-    }
-
     public class AssistanceViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public Assistance mItem;
+        final View mView;
+        final TextView mStudentName;
+        final TextView mStudentSchool;
+        Assistance mItem;
 
         public AssistanceViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.name);
-            mContentView = (TextView) view.findViewById(R.id.school);
-        }
-
-        public void setAssisted(boolean assisted) {
-            if (assisted) {
-                mView.setBackgroundColor(GREEN);
-            } else {
-                mView.setBackgroundColor(RED);
-            }
+            mStudentName = view.findViewById(R.id.name);
+            mStudentSchool = view.findViewById(R.id.school);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mStudentSchool.getText() + "'";
         }
     }
 }
