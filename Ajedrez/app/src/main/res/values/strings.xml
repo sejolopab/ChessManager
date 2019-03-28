@@ -9,4 +9,6 @@
     <string name="assistance_title">Asistencia</string>
     <string name="students_title">Estudiantes</string>
     <string name="lessons_title">Lecciones</string>
+    <string name="yes_button">Yes</string>
+    <string name="no_button">No</string>
 </resources>

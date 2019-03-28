@@ -1,10 +1,7 @@
-package com.example.ajedrez;
+package com.example.ajedrez.View;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,11 +11,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.ajedrez.StudentsAssistListFragment.OnListFragmentInteractionListener;
-import com.example.ajedrez.dummy.DummyContent;
+import com.example.ajedrez.R;
+import com.example.ajedrez.View.Assistance.StudentsAssistListFragment;
+import com.example.ajedrez.View.Assistance.StudentsAssistListFragment.StudentsAssistanceListener;
+import com.example.ajedrez.View.Lessons.LessonsListFragment;
+import com.example.ajedrez.View.Students.StudentsListFragment;
+import com.example.ajedrez.View.Students.StudentsListFragment.StudentsListener;
+import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, StudentsAssistanceListener, StudentsListener, LessonsListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +29,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -61,6 +63,12 @@ public class MainActivity extends AppCompatActivity
         if (fragment instanceof StudentsAssistListFragment) {
             StudentsAssistListFragment assistListFragment = (StudentsAssistListFragment) fragment;
             assistListFragment.setListener(this);
+        } else if (fragment instanceof StudentsListFragment) {
+            StudentsListFragment studentsListFragment = (StudentsListFragment) fragment;
+            studentsListFragment.setListener(this);
+        } else if (fragment instanceof LessonsListFragment) {
+            LessonsListFragment lessonsListFragment = (LessonsListFragment) fragment;
+            lessonsListFragment.setListener(this);
         }
     }
 
@@ -93,16 +101,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_students) {
-            // Handle the camera action
+            showStudentsFragment();
         } else if (id == R.id.nav_assistance) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
-                    .replace(R.id.content_container, StudentsAssistListFragment.newInstance())
-                    .commitAllowingStateLoss();
-        } else if (id == R.id.nav_slideshow) {
-
+            showAssistanceFragment();
+        } else if (id == R.id.nav_lessons) {
+            showLessonsFragment();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -116,8 +119,30 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    private void showAssistanceFragment () {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.content_container, StudentsAssistListFragment.newInstance())
+                .commitAllowingStateLoss();
+    }
 
+    private void showStudentsFragment () {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.content_container, StudentsListFragment.newInstance())
+                .commitAllowingStateLoss();
+    }
+
+    private void showLessonsFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.content_container, LessonsListFragment.newInstance())
+                .commitAllowingStateLoss();
     }
 }

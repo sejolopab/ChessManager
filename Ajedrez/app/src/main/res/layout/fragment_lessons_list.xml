@@ -10,22 +10,22 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/assistance_title"
+        android:text="@string/students_title"
         android:textAlignment="center"
         android:layout_margin="@dimen/text_margin"
         style="@style/TextAppearance.MaterialComponents.Headline4">
     </TextView>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/studentsList"
-        android:name="com.example.ajedrez.StudentsAssistListFragment"
+        android:id="@+id/lessonsList"
+        android:name="com.example.ajedrez.View.Lessons.LessonsListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".StudentsAssistListFragment"
-        tools:listitem="@layout/fragment_item"
-        android:clipToPadding="false"/>
+        tools:context=".View.Lessons.LessonsListFragment"
+        tools:listitem="@layout/fragment_lessons_item" />
 
 </LinearLayout>
+

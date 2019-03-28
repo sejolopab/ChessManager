@@ -1,4 +1,4 @@
-package com.example.ajedrez;
+package com.example.ajedrez.View.Lessons;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,23 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ajedrez.Model.Student;
-import com.example.ajedrez.StudentsAssistListFragment.OnListFragmentInteractionListener;
-import com.example.ajedrez.dummy.DummyContent.DummyItem;
+import com.example.ajedrez.Model.Lesson;
+import com.example.ajedrez.R;
+import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * {@link RecyclerView.Adapter} that can display a {@link Lesson} and makes a call to the
+ * specified {@link LessonsListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAdapter.ViewHolder> {
+public class LessonsListAdapter extends RecyclerView.Adapter<LessonsListAdapter.ViewHolder> {
 
-    private final List<Student> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final List<Lesson> mValues;
+    private final LessonsListener mListener;
 
-    public AssistanceListAdapter(List<Student> items, OnListFragmentInteractionListener listener) {
+    public LessonsListAdapter(List<Lesson> items, LessonsListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -30,15 +30,15 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.fragment_lessons_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getName());
-        holder.mContentView.setText(mValues.get(position).getSchool());
+        holder.mIdView.setText(mValues.get(position).getDate().toString());
+        holder.mContentView.setText("Holis");
 
         /*holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,13 +61,13 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public Student mItem;
+        public Lesson mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.name);
-            mContentView = (TextView) view.findViewById(R.id.school);
+            mIdView = (TextView) view.findViewById(R.id.item_number);
+            mContentView = (TextView) view.findViewById(R.id.content);
         }
 
         @Override

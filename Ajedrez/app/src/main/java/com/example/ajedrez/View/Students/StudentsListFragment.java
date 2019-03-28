@@ -1,4 +1,4 @@
-package com.example.ajedrez;
+package com.example.ajedrez.View.Students;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,40 +11,37 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.example.ajedrez.Data.DataManager;
-import com.example.ajedrez.dummy.DummyContent;
-import com.example.ajedrez.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.example.ajedrez.R;
+import com.example.ajedrez.View.Assistance.AssistanceListAdapter;
+import com.example.ajedrez.View.MainActivity;
 
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link StudentsListener}
  * interface.
  */
-public class StudentsAssistListFragment extends Fragment {
+public class StudentsListFragment extends Fragment {
 
-    private OnListFragmentInteractionListener mListener;
-    private AssistanceListAdapter adapter;
+    private StudentsListener mListener;
     private RecyclerView recyclerView;
+    private StudentsListAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public StudentsAssistListFragment() {
+    public StudentsListFragment() {
     }
 
     public void setListener(MainActivity activity) {
         this.mListener = activity;
     }
 
-
-    public static StudentsAssistListFragment newInstance() {
-        return new StudentsAssistListFragment();
+    public static StudentsListFragment newInstance() {
+        return new StudentsListFragment();
     }
 
     @Override
@@ -53,31 +50,17 @@ public class StudentsAssistListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_list, container, false);
         recyclerView = view.findViewById(R.id.studentsList);
         return view;
-        /*int mColumnCount = 1;
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DataManager.getInstance().getActiveStudents(), mListener));
-        }*/
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new AssistanceListAdapter(DataManager.getInstance().getActiveStudents(), mListener);
+        adapter = new StudentsListAdapter(DataManager.getInstance().getActiveStudents(), mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         //adapter.setOnClickListener(this);
@@ -93,8 +76,6 @@ public class StudentsAssistListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+    public interface StudentsListener {
     }
 }
