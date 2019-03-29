@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DataManager {
-    private static volatile DataManager sDataInstance = new DataManager();
+public class fuckit {
+    private static volatile fuckit sDataInstance = new fuckit();
     private List<Student> students;
     private List<Subject> subjects;
     private List<Lesson> lessons;
-    private DataManager(){
+    private fuckit(){
         students = new ArrayList<>();
         students.add(new Student("Panfilo Rogriguez", "COPES", "2/2/2019","20/4/2019"));
         students.add(new Student("Panfila Rogriguez", "COPES", "2/2/2019","20/4/2019"));
@@ -36,7 +36,7 @@ public class DataManager {
         lessons.add(new Lesson(date, assists));
     }
 
-    public static DataManager getInstance() {
+    public static fuckit getInstance() {
         return sDataInstance;
     }
 

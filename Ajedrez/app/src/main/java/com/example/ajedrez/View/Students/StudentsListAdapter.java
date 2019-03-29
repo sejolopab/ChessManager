@@ -1,5 +1,6 @@
 package com.example.ajedrez.View.Students;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.Students.StudentsListFragment.StudentsListener;
 import com.example.ajedrez.Model.Student;
+
 import java.util.List;
 
 /**
@@ -18,26 +20,27 @@ import java.util.List;
  */
 public class StudentsListAdapter extends RecyclerView.Adapter<StudentsListAdapter.ViewHolder> {
 
-    private final List<Student> mValues;
+    private List<Student> mStudentsList;
     private final StudentsListener mListener;
 
-    public StudentsListAdapter(List<Student> items, StudentsListener listener) {
-        mValues = items;
+    public StudentsListAdapter(List items, StudentsListener listener) {
+        mStudentsList = (List<Student>)items;
         mListener = listener;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_student_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getName());
-        holder.mContentView.setText(mValues.get(position).getSchool());
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        holder.mItem = mStudentsList.get(position);
+        holder.mName.setText(mStudentsList.get(position).getName());
+        holder.mSchool.setText(mStudentsList.get(position).getSchool());
 
         /*holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,25 +56,30 @@ public class StudentsListAdapter extends RecyclerView.Adapter<StudentsListAdapte
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mStudentsList.size();
+    }
+
+    void setStudentsList(List<Student> newList) {
+        this.mStudentsList = newList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public Student mItem;
+        final View mView;
+        final TextView mName;
+        final TextView mSchool;
+        Student mItem;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mName = view.findViewById(R.id.item_number);
+            mSchool = view.findViewById(R.id.content);
         }
 
+        @NonNull
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mSchool.getText() + "'";
         }
     }
 }

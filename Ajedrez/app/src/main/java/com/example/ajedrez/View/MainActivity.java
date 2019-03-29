@@ -20,6 +20,8 @@ import com.example.ajedrez.View.Students.StudentsListFragment.StudentsListener;
 import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener;
 import com.example.ajedrez.View.Subjects.SubjectsListFragment;
 import com.example.ajedrez.View.Subjects.SubjectsListFragment.SubjectsListener;
+import com.firebase.client.Firebase;
+import com.google.firebase.FirebaseApp;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, StudentsAssistanceListener, StudentsListener, LessonsListener, SubjectsListener {
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

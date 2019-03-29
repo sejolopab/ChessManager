@@ -10,9 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ajedrez.Data.DataManager;
+import com.example.ajedrez.Data.fuckit;
 import com.example.ajedrez.R;
-import com.example.ajedrez.View.Assistance.AssistanceListAdapter;
 import com.example.ajedrez.View.MainActivity;
 
 /**
@@ -59,7 +58,7 @@ public class LessonsListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new LessonsListAdapter(DataManager.getInstance().getLessons(), mListener);
+        adapter = new LessonsListAdapter(fuckit.getInstance().getLessons(), mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         //adapter.setOnClickListener(this);

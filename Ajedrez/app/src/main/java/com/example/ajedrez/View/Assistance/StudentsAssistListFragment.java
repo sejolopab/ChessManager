@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ajedrez.Data.DataManager;
+import com.example.ajedrez.Data.fuckit;
 import com.example.ajedrez.Model.Assistance;
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
@@ -65,7 +65,7 @@ public class StudentsAssistListFragment extends Fragment {
 
     public void initializeAssistanceList() {
         assistanceList = new ArrayList<>();
-        for (Student student:DataManager.getInstance().getActiveStudents()) {
+        for (Student student: fuckit.getInstance().getActiveStudents()) {
             assistanceList.add(new Assistance(student));
         }
     }

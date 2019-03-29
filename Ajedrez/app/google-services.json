@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "44897518011",
+    "firebase_url": "https://ajedrez-bd3f0.firebaseio.com",
+    "project_id": "ajedrez-bd3f0",
+    "storage_bucket": "ajedrez-bd3f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44897518011:android:a27b6a5c00aa25f8",
+        "android_client_info": {
+          "package_name": "com.example.ajedrez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44897518011-1ki4hflbvfosoj5uukjknmqgrjkf6i2j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ajedrez",
+            "certificate_hash": "f219a8df928416a3388955239ebb10d2f562a265"
+          }
+        },
+        {
+          "client_id": "44897518011-bfmmcnvngrsqj90c8okuk12f1kjr09q2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDprQ8DUpyG4QMiRVkZgFZTZKChuN7IGfo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44897518011-bfmmcnvngrsqj90c8okuk12f1kjr09q2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
