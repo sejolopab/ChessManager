@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ajedrez.Model.Assistance;
 import com.example.ajedrez.Model.Lesson;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,10 +21,10 @@ import java.util.List;
  */
 public class LessonsListAdapter extends RecyclerView.Adapter<LessonsListAdapter.ViewHolder> {
 
-    private final List<Lesson> mValues;
+    private List<Lesson> mValues;
     private final LessonsListener mListener;
 
-    public LessonsListAdapter(List<Lesson> items, LessonsListener listener) {
+    LessonsListAdapter(List<Lesson> items, LessonsListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -58,13 +60,17 @@ public class LessonsListAdapter extends RecyclerView.Adapter<LessonsListAdapter.
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mDate;
-        public final TextView mAttendance;
-        public Lesson mItem;
+    void setLessonsList(List<Lesson> lessonsList) {
+        this.mValues = lessonsList;
+    }
 
-        public ViewHolder(View view) {
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        final View mView;
+        final TextView mDate;
+        final TextView mAttendance;
+        Lesson mItem;
+
+        ViewHolder(View view) {
             super(view);
             mView = view;
             mDate = view.findViewById(R.id.item_number);

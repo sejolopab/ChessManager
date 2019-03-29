@@ -10,9 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ajedrez.Data.fuckit;
+import com.example.ajedrez.Model.Student;
+import com.example.ajedrez.Model.Subject;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.MainActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -25,13 +34,8 @@ public class SubjectsListFragment extends Fragment {
     private RecyclerView recyclerView;
     private SubjectsListAdapter adapter;
     private SubjectsListener mListener;
+    private List<Subject> subjectList;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public SubjectsListFragment() {
-    }
     public static SubjectsListFragment newInstance() {
         return new SubjectsListFragment();
     }
@@ -41,12 +45,7 @@ public class SubjectsListFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_subjects_list, container, false);
         recyclerView = view.findViewById(R.id.subjectsList);
@@ -56,12 +55,33 @@ public class SubjectsListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new SubjectsListAdapter(fuckit.getInstance().getSubjects(), mListener);
+        adapter = new SubjectsListAdapter(new ArrayList<>(), mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+        loadSubjects();
         //adapter.setOnClickListener(this);
     }
 
+    public void loadSubjects() {
+        Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("subjects");
+        studentsQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                subjectList = new ArrayList<>();
+                for(DataSnapshot subjects :dataSnapshot.getChildren()){
+                    Subject subject = new Subject(subjects.getKey());
+                    subjectList.add(subject);
+                }
+                adapter.setSubjectsList(subjectList);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

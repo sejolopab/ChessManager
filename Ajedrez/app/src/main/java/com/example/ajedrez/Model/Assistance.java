@@ -1,30 +1,30 @@
 package com.example.ajedrez.Model;
 
-import java.util.List;
-
 public class Assistance {
     public Boolean assisted;
-    Student student;
-    List<Subject> subjects;
+    private Student student;
 
-    public Assistance(Student student, List<Subject> subjects) {
-        this.student = student;
-        this.subjects = subjects;
+    public Assistance() {
+
     }
 
     public Assistance(Student student) {
         this.student = student;
     }
 
-    public void setAssisted(boolean assisted) {
-        this.assisted = assisted;
-    }
-
     public Student getStudent() {
         return student;
     }
 
-    public boolean isAssisted() {
+    public Boolean getAssisted() {
         return assisted;
+    }
+
+    public void setAssisted(boolean assisted) {
+        this.assisted = assisted;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }

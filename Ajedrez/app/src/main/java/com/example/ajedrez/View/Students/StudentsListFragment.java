@@ -35,7 +35,6 @@ import java.util.List;
  */
 public class StudentsListFragment extends Fragment {
 
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private StudentsListener mListener;
     private RecyclerView recyclerView;
     private StudentsListAdapter adapter;
@@ -67,17 +66,12 @@ public class StudentsListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
         recyclerView = view.findViewById(R.id.studentsList);
         FloatingActionButton add = view.findViewById(R.id.addStudent);
-        add.setOnClickListener(v -> {
-            DatabaseReference myRef = database.getReference("students2");
-            Student student = new Student("Panfilo Rogriguez", "COPES", "2/2/2019","20/4/2019");
-            studentsList.add(student);
-            myRef.push().setValue(student);
-        });
+        add.setOnClickListener(v -> mListener.showAddStudentScreen());
         return view;
     }
 
     public void loadStudents() {
-        Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("students2");
+        Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("students");
         studentsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -97,9 +91,6 @@ public class StudentsListFragment extends Fragment {
                 }
                 adapter.setStudentsList(studentsList);
                 adapter.notifyDataSetChanged();
-                //adapter = new StudentsListAdapter(studentsList, mListener);
-                //recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                //recyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -131,5 +122,6 @@ public class StudentsListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface StudentsListener {
+        void showAddStudentScreen();
     }
 }

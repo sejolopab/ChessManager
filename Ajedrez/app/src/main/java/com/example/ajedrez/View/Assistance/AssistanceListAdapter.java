@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ajedrez.Model.Assistance;
+import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.Assistance.StudentsAssistListFragment.StudentsAssistanceListener;
 
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAdapter.AssistanceViewHolder> {
 
-    private final List<Assistance> mAssistance;
+    private List<Assistance> mAssistance;
     private final StudentsAssistanceListener mListener;
 
     public AssistanceListAdapter(List<Assistance> assistanceList, StudentsAssistanceListener listener) {
@@ -68,6 +69,10 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
     @Override
     public int getItemCount() {
         return mAssistance.size();
+    }
+
+    public void setAssistanceList(List<Assistance> studentsList) {
+        mAssistance = studentsList;
     }
 
     public class AssistanceViewHolder extends RecyclerView.ViewHolder {

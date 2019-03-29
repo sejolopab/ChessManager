@@ -3,6 +3,7 @@ package com.example.ajedrez.View.Assistance;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ajedrez.Data.fuckit;
 import com.example.ajedrez.Model.Assistance;
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
+import com.example.ajedrez.Utils.DateManager;
 import com.example.ajedrez.View.MainActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +40,6 @@ public class StudentsAssistListFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Assistance> assistanceList;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public StudentsAssistListFragment() {
-    }
 
     public void setListener(MainActivity activity) {
         this.mListener = activity;
@@ -50,24 +51,14 @@ public class StudentsAssistListFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_assistance_list, container, false);
         recyclerView = view.findViewById(R.id.studentsAssistanceList);
-        initializeAssistanceList();
-        return view;
-    }
-
-    public void initializeAssistanceList() {
+        FloatingActionButton saveAssistance = view.findViewById(R.id.saveAssistance);
+        saveAssistance.setOnClickListener(v -> saveAssistance());
         assistanceList = new ArrayList<>();
-        for (Student student: fuckit.getInstance().getActiveStudents()) {
-            assistanceList.add(new Assistance(student));
-        }
+        return view;
     }
 
     @Override
@@ -77,10 +68,41 @@ public class StudentsAssistListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         setupSwipeListener();
+        loadStudents();
         //adapter.setOnClickListener(this);
     }
 
-    public void setupSwipeListener() {
+    private void loadStudents() {
+        Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("students");
+        studentsQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                assistanceList = new ArrayList<>();
+                for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
+                    Student value = dataSnapshot1.getValue(Student.class);
+                    Student newStudent = new Student();
+                    String name = value.getName();
+                    String school = value.getSchool();
+                    String lastClass = value.getLastClass();
+                    String startingDate = value.getStartingDate();
+                    newStudent.setName(name);
+                    newStudent.setSchool(school);
+                    newStudent.setLastClass(lastClass);
+                    newStudent.setStartingDate(startingDate);
+                    assistanceList.add(new Assistance(newStudent));
+                }
+                adapter.setAssistanceList(assistanceList);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setupSwipeListener() {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -106,6 +128,13 @@ public class StudentsAssistListFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
+    private void saveAssistance() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("assistance");
+        myRef.child(DateManager.getInstance().getSimpleDate()).setValue(assistanceList);
+        mListener.onAssistanceListSaved();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -117,5 +146,6 @@ public class StudentsAssistListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface StudentsAssistanceListener {
+        void onAssistanceListSaved();
     }
 }

@@ -19,10 +19,10 @@ import java.util.List;
  */
 public class SubjectsListAdapter extends RecyclerView.Adapter<SubjectsListAdapter.ViewHolder> {
 
-    private final List<Subject> mValues;
+    private List<Subject> mValues;
     private final SubjectsListener mListener;
 
-    public SubjectsListAdapter(List<Subject> items, SubjectsListener listener) {
+    SubjectsListAdapter(List<Subject> items, SubjectsListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -38,7 +38,7 @@ public class SubjectsListAdapter extends RecyclerView.Adapter<SubjectsListAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).getName());
-        holder.mContentView.setText("Holis");
+        holder.mContentView.setText("");
 
         /*holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,17 +57,21 @@ public class SubjectsListAdapter extends RecyclerView.Adapter<SubjectsListAdapte
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public Subject mItem;
+    void setSubjectsList(List<Subject> subjectList) {
+        mValues = subjectList;
+    }
 
-        public ViewHolder(View view) {
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        final View mView;
+        final TextView mIdView;
+        final TextView mContentView;
+        Subject mItem;
+
+        ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = view.findViewById(R.id.item_number);
+            mContentView = view.findViewById(R.id.content);
         }
 
         @Override
