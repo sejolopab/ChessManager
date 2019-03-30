@@ -39,7 +39,7 @@ public class LessonsListAdapter extends RecyclerView.Adapter<LessonsListAdapter.
         Lesson lesson = mValues.get(position);
         holder.mItem = lesson;
         holder.mDate.setText(lesson.getDate());
-        holder.mAttendance.setText(String.valueOf(lesson.getAssistance()));
+        holder.mAttendance.setText(String.valueOf(lesson.getNumberOfAssists()));
 
         /*holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

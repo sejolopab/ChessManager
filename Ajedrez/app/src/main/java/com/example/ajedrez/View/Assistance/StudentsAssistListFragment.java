@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ajedrez.Model.Assistance;
+import com.example.ajedrez.Model.Lesson;
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.GenericMethodsManager;
@@ -37,7 +38,7 @@ public class StudentsAssistListFragment extends Fragment {
     private AssistanceListAdapter adapter;
     private RecyclerView recyclerView;
     private List<Assistance> assistanceList;
-
+    private String todaysDate = GenericMethodsManager.getInstance().getSimpleDate();
 
     public void setListener(MainActivity activity) {
         this.mListener = activity;
@@ -66,7 +67,32 @@ public class StudentsAssistListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         setupSwipeListener();
-        loadStudents();
+        loadAssistance();
+    }
+
+    private void loadAssistance() {
+        Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("assistance").child(todaysDate);
+        studentsQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Assistance> assistants = new ArrayList<>();
+                for(DataSnapshot student :dataSnapshot.getChildren()){
+                    Assistance value = student.getValue(Assistance.class);
+                    assistants.add(value);
+                }
+                if (assistants.size() > 0) {
+                    adapter.setAssistanceList(assistants);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    loadStudents();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void loadStudents() {
@@ -119,7 +145,7 @@ public class StudentsAssistListFragment extends Fragment {
     private void saveAssistance() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("assistance");
-        myRef.child(GenericMethodsManager.getInstance().getSimpleDate()).setValue(assistanceList);
+        myRef.child(todaysDate).setValue(assistanceList);
         mListener.onAssistanceListSaved();
     }
 

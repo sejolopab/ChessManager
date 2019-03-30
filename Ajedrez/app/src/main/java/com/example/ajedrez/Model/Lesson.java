@@ -15,7 +15,11 @@ public class Lesson {
         return date;
     }
 
-    public int getAssistance() {
+    public List<Assistance> getAssistance() {
+        return assistance;
+    }
+
+    public int getNumberOfAssists() {
         int assists = 0;
         for (Assistance student:assistance) {
             if (student.assisted == null)
