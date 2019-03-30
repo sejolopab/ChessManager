@@ -37,7 +37,7 @@ public class SubjectsListAdapter extends RecyclerView.Adapter<SubjectsListAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getName());
+        holder.mName.setText(mValues.get(position).getName());
         holder.mContentView.setText("");
 
         /*holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -63,14 +63,14 @@ public class SubjectsListAdapter extends RecyclerView.Adapter<SubjectsListAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
-        final TextView mIdView;
+        final TextView mName;
         final TextView mContentView;
         Subject mItem;
 
         ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = view.findViewById(R.id.item_number);
+            mName = view.findViewById(R.id.item_number);
             mContentView = view.findViewById(R.id.content);
         }
 

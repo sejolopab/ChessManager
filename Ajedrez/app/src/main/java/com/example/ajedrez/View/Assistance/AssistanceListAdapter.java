@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ajedrez.Model.Assistance;
-import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.Assistance.StudentsAssistListFragment.StudentsAssistanceListener;
 

@@ -6,12 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ajedrez.Model.Assistance;
 import com.example.ajedrez.Model.Lesson;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**

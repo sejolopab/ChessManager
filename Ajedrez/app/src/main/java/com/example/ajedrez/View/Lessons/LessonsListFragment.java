@@ -1,8 +1,6 @@
 package com.example.ajedrez.View.Lessons;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.ajedrez.Model.Assistance;
 import com.example.ajedrez.Model.Lesson;
-import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.MainActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +19,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -56,7 +52,7 @@ public class LessonsListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new LessonsListAdapter(lessonList, mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -69,7 +65,7 @@ public class LessonsListFragment extends Fragment {
         Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("assistance");
         studentsQuery.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Lesson> lessonsList = new ArrayList<>();
                 for(DataSnapshot assistanceList :dataSnapshot.getChildren()){
                     String date = assistanceList.getKey();
@@ -85,11 +81,12 @@ public class LessonsListFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
     }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

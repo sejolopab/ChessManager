@@ -1,8 +1,6 @@
 package com.example.ajedrez.View.Students;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +13,6 @@ import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.MainActivity;
 
-//import com.firebase.client.ValueEventListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -74,19 +71,11 @@ public class StudentsListFragment extends Fragment {
         Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("students");
         studentsQuery.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 studentsList = new ArrayList<>();
-                for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
-                    Student value = dataSnapshot1.getValue(Student.class);
-                    Student newStudent = new Student();
-                    String name = value.getName();
-                    String school = value.getSchool();
-                    String lastClass = value.getLastClass();
-                    String startingDate = value.getStartingDate();
-                    newStudent.setName(name);
-                    newStudent.setSchool(school);
-                    newStudent.setLastClass(lastClass);
-                    newStudent.setStartingDate(startingDate);
+                for(DataSnapshot data :dataSnapshot.getChildren()){
+                    Student newStudent = data.getValue(Student.class);
+                    newStudent.setId(data.getKey());
                     studentsList.add(newStudent);
                 }
                 adapter.setStudentsList(studentsList);
@@ -94,21 +83,20 @@ public class StudentsListFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         studentsList = new ArrayList<>();
         adapter = new StudentsListAdapter(studentsList, mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         loadStudents();
-        //adapter.setOnClickListener(this);
     }
 
     /**
@@ -123,5 +111,6 @@ public class StudentsListFragment extends Fragment {
      */
     public interface StudentsListener {
         void showAddStudentScreen();
+        void showStudentInfoScreen(Student student);
     }
 }

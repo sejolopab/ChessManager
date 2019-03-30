@@ -1,8 +1,6 @@
 package com.example.ajedrez.View.Subjects;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.Model.Subject;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.MainActivity;
@@ -45,7 +42,7 @@ public class SubjectsListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_subjects_list, container, false);
         recyclerView = view.findViewById(R.id.subjectsList);
@@ -53,7 +50,7 @@ public class SubjectsListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new SubjectsListAdapter(new ArrayList<>(), mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -66,7 +63,7 @@ public class SubjectsListFragment extends Fragment {
         Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("subjects");
         studentsQuery.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 subjectList = new ArrayList<>();
                 for(DataSnapshot subjects :dataSnapshot.getChildren()){
                     Subject subject = new Subject(subjects.getKey());
@@ -77,7 +74,7 @@ public class SubjectsListFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });

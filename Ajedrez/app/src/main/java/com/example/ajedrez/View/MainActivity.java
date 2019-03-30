@@ -1,6 +1,7 @@
 package com.example.ajedrez.View;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,10 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.View.Assistance.StudentsAssistListFragment;
 import com.example.ajedrez.View.Assistance.StudentsAssistListFragment.StudentsAssistanceListener;
 import com.example.ajedrez.View.Lessons.LessonsListFragment;
+import com.example.ajedrez.View.Students.InfoStudentFragment;
 import com.example.ajedrez.View.Students.NewStudentFragment;
 import com.example.ajedrez.View.Students.StudentsListFragment;
 import com.example.ajedrez.View.Students.StudentsListFragment.StudentsListener;
@@ -22,18 +25,20 @@ import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener;
 import com.example.ajedrez.View.Subjects.SubjectsListFragment;
 import com.example.ajedrez.View.Subjects.SubjectsListFragment.SubjectsListener;
 import com.example.ajedrez.View.Students.NewStudentFragment.NewStudentListener;
+import com.example.ajedrez.View.Students.InfoStudentFragment.StudentInfoListener;
 
 import com.google.firebase.FirebaseApp;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, StudentsAssistanceListener,
-        StudentsListener, LessonsListener, SubjectsListener, NewStudentListener {
+        StudentsListener, LessonsListener, SubjectsListener, NewStudentListener, StudentInfoListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -45,6 +50,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        showAssistanceFragment();
     }
 
     @Override
@@ -74,6 +81,9 @@ public class MainActivity extends AppCompatActivity
         } else if (fragment instanceof NewStudentFragment) {
             NewStudentFragment newStudentFragment = (NewStudentFragment) fragment;
             newStudentFragment.setListener(this);
+        } else if (fragment instanceof InfoStudentFragment) {
+            InfoStudentFragment infoStudentFragment = (InfoStudentFragment) fragment;
+            infoStudentFragment.setListener(this);
         }
     }
 
@@ -171,12 +181,27 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void showStudentInfoScreen(Student student) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.content_container, InfoStudentFragment.newInstance(student))
+                .commitAllowingStateLoss();
+    }
+
+    @Override
     public void onStudentCreated() {
         showStudentsFragment();
     }
 
     @Override
     public void onAssistanceListSaved() {
+        showStudentsFragment();
+    }
+
+    @Override
+    public void onStudentInfoUpdated() {
         showStudentsFragment();
     }
 }
