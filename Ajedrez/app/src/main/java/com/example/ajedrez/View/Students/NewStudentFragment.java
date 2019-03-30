@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
+import com.example.ajedrez.Utils.AlertsManager;
 import com.example.ajedrez.Utils.GenericMethodsManager;
 import com.example.ajedrez.View.MainActivity;
 import com.google.firebase.database.DatabaseReference;
@@ -108,6 +109,14 @@ public class NewStudentFragment extends Fragment {
     }
 
     private void createUser(){
+        if (newStudent.getName() == null) {
+            AlertsManager.getInstance().showAlertDialog(getString(R.string.error_title), getString(R.string.error_name_required), getContext());
+            return;
+        }
+        if (newStudent.getName().isEmpty()) {
+            AlertsManager.getInstance().showAlertDialog(getString(R.string.error_title), getString(R.string.error_name_required), getContext());
+            return;
+        }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("students");
         myRef.push().setValue(newStudent);

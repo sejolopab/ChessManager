@@ -58,7 +58,6 @@ public class LessonsListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         loadAssistance();
-        //adapter.setOnClickListener(this);
     }
 
     private void loadAssistance() {

@@ -56,7 +56,6 @@ public class SubjectsListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         loadSubjects();
-        //adapter.setOnClickListener(this);
     }
 
     public void loadSubjects() {

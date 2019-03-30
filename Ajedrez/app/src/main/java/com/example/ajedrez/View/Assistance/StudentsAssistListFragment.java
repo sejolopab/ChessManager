@@ -67,7 +67,6 @@ public class StudentsAssistListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipeListener();
         loadStudents();
-        //adapter.setOnClickListener(this);
     }
 
     private void loadStudents() {
@@ -76,17 +75,8 @@ public class StudentsAssistListFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 assistanceList = new ArrayList<>();
-                for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
-                    Student value = dataSnapshot1.getValue(Student.class);
-                    Student newStudent = new Student();
-                    String name = value.getName();
-                    String school = value.getSchool();
-                    String lastClass = value.getLastClass();
-                    String startingDate = value.getStartingDate();
-                    newStudent.setName(name);
-                    newStudent.setSchool(school);
-                    newStudent.setLastClass(lastClass);
-                    newStudent.setStartingDate(startingDate);
+                for(DataSnapshot data :dataSnapshot.getChildren()){
+                    Student newStudent = data.getValue(Student.class);
                     assistanceList.add(new Assistance(newStudent));
                 }
                 adapter.setAssistanceList(assistanceList);
