@@ -75,13 +75,13 @@ public class StudentsAssistListFragment extends Fragment {
         studentsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Assistance> assistants = new ArrayList<>();
+                assistanceList = new ArrayList<>();
                 for(DataSnapshot student :dataSnapshot.getChildren()){
                     Assistance value = student.getValue(Assistance.class);
-                    assistants.add(value);
+                    assistanceList.add(value);
                 }
-                if (assistants.size() > 0) {
-                    adapter.setAssistanceList(assistants);
+                if (assistanceList.size() > 0) {
+                    adapter.setAssistanceList(assistanceList);
                     adapter.notifyDataSetChanged();
                 } else {
                     loadStudents();
