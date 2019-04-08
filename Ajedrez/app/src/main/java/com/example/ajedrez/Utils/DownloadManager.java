@@ -2,10 +2,6 @@ package com.example.ajedrez.Utils;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -28,21 +24,15 @@ public class DownloadManager {
 
         StorageReference ref = storageRef.child("principiante/" + fileName);
 
-        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                String url = uri.toString();
-                downloadFile(context, fileName,DIRECTORY_DOWNLOADS,url);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+        ref.getDownloadUrl().addOnSuccessListener(uri -> {
+            String url = uri.toString();
+            downloadFile(context, fileName,DIRECTORY_DOWNLOADS,url);
+        }).addOnFailureListener(e -> {
 
-            }
         });
     }
 
-    public void downloadFile(Context context, String fileName, String destinationDirectory, String url) {
+    private void downloadFile(Context context, String fileName, String destinationDirectory, String url) {
         android.app.DownloadManager downloadManager = (android.app.DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri uri = Uri.parse(url);
         android.app.DownloadManager.Request request = new android.app.DownloadManager.Request(uri);

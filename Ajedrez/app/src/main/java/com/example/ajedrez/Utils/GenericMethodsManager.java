@@ -2,31 +2,15 @@ package com.example.ajedrez.Utils;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatEditText;
-import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.atomic.DoubleAccumulator;
-
-import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class GenericMethodsManager {
     private static GenericMethodsManager instance = new GenericMethodsManager();

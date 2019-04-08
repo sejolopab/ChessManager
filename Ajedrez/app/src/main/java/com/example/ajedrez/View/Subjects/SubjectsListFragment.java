@@ -22,12 +22,6 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link SubjectsListener}
- * interface.
- */
 public class SubjectsListFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -68,7 +62,6 @@ public class SubjectsListFragment extends Fragment {
                 subjectList = new ArrayList<>();
                 for(DataSnapshot subject :dataSnapshot.getChildren()){
                     Subject newSubject = subject.getValue(Subject.class);
-                    //Subject subject = new Subject(subjects.getKey());
                     subjectList.add(newSubject);
                 }
                 adapter.setSubjectsList(subjectList);
@@ -81,16 +74,8 @@ public class SubjectsListFragment extends Fragment {
             }
         });
     }
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface SubjectsListener {
+        public void showSubjectReader(String fileName);
     }
 }

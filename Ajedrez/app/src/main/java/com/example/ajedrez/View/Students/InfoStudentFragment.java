@@ -1,6 +1,7 @@
 package com.example.ajedrez.View.Students;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
@@ -18,14 +19,6 @@ import com.example.ajedrez.View.MainActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link InfoStudentFragment} interface
- * to handle interaction events.
- * Use the {@link InfoStudentFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class InfoStudentFragment extends Fragment {
 
     private StudentInfoListener mListener;
@@ -61,7 +54,7 @@ public class InfoStudentFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_info_student, container, false);
         AppCompatEditText nameText = view.findViewById(R.id.nameText);
@@ -108,6 +101,17 @@ public class InfoStudentFragment extends Fragment {
 
         AppCompatEditText firstClass = view.findViewById(R.id.firstClassText);
         firstClass.setText(mStudent.getStartingDate());
+        firstClass.setOnClickListener(v ->
+                GenericMethodsManager.getInstance().openCalendar(firstClass, getContext()));
+        firstClass.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                mStudent.setStartingDate(s.toString());
+                mStudent.setLastClass(s.toString());
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
         AppCompatEditText lastClass = view.findViewById(R.id.lastClassText);
         lastClass.setText(mStudent.getLastClass());
 

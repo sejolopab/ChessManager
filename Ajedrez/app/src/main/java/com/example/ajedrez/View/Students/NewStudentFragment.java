@@ -1,6 +1,7 @@
 package com.example.ajedrez.View.Students;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
@@ -18,14 +19,6 @@ import com.example.ajedrez.View.MainActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link NewStudentListener} interface
- * to handle interaction events.
- * Use the {@link NewStudentFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class NewStudentFragment extends Fragment {
 
     private Student newStudent =  new Student();
@@ -45,9 +38,9 @@ public class NewStudentFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_new_student, container, false);
         FloatingActionButton add = view.findViewById(R.id.saveStudent);
         add.setOnClickListener(v -> createUser());

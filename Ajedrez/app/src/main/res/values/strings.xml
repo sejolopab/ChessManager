@@ -22,4 +22,5 @@
     <string name="phone_number">Telefono</string>
     <string name="name">Nombre</string>
     <string name="last_class">Ultima clase asistida</string>
+    <string name="file_not_found">File not found</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.ajedrez.View;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import com.example.ajedrez.View.Students.NewStudentFragment;
 import com.example.ajedrez.View.Students.StudentsListFragment;
 import com.example.ajedrez.View.Students.StudentsListFragment.StudentsListener;
 import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener;
+import com.example.ajedrez.View.Subjects.SubjectReaderFragment;
 import com.example.ajedrez.View.Subjects.SubjectsListFragment;
 import com.example.ajedrez.View.Subjects.SubjectsListFragment.SubjectsListener;
 import com.example.ajedrez.View.Students.NewStudentFragment.NewStudentListener;
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -204,5 +206,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onStudentInfoUpdated() {
         showStudentsFragment();
+    }
+
+    @Override
+    public void showSubjectReader(String fileName) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.content_container, SubjectReaderFragment.newInstance(fileName))
+                .commitAllowingStateLoss();
     }
 }

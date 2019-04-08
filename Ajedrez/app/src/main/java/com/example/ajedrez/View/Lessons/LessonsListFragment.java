@@ -1,6 +1,7 @@
 package com.example.ajedrez.View.Lessons;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,12 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link LessonsListener}
- * interface.
- */
 public class LessonsListFragment extends Fragment {
 
     private LessonsListener mListener;
@@ -43,7 +38,7 @@ public class LessonsListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lessons_list, container, false);
         recyclerView = view.findViewById(R.id.lessonsList);
@@ -52,7 +47,7 @@ public class LessonsListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new LessonsListAdapter(lessonList, mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -64,7 +59,7 @@ public class LessonsListFragment extends Fragment {
         Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("assistance");
         studentsQuery.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Lesson> lessonsList = new ArrayList<>();
                 for(DataSnapshot assistanceList :dataSnapshot.getChildren()){
                     String date = assistanceList.getKey();
@@ -80,22 +75,12 @@ public class LessonsListFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface LessonsListener {
     }
 }
