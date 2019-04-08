@@ -3,7 +3,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Ajedrez San Carlos</string>
-    <string name="nav_header_subtitle">Impulsando la Zona Norte</string>
+    <string name="nav_header_subtitle">Tu Mejor Movimiento</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="assistance_title">Asistencia</string>
@@ -16,4 +16,10 @@
     <string name="error_name_required">El nombre es requerido para guardar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="first_lesson_date">Fecha de ingreso</string>
+    <string name="school">Escuela</string>
+    <string name="birth_date">Fecha de Nacimiento</string>
+    <string name="phone_number">Telefono</string>
+    <string name="name">Nombre</string>
+    <string name="last_class">Ultima clase asistida</string>
 </resources>

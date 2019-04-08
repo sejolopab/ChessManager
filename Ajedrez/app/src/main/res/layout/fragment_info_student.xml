@@ -27,15 +27,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginStart="8dp"
+            android:hint="@string/name"
+            android:focusableInTouchMode="true">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/nameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_edit"
-                android:focusable="true"
-                android:hint="Nombre" />
+                android:focusable="true" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -43,7 +44,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginStart="8dp"
+            android:hint="@string/phone_number"
+            android:focusableInTouchMode="true">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/phoneText"
@@ -51,8 +54,7 @@
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_edit"
                 android:inputType="phone"
-                android:maxLength="8"
-                android:hint="Telefono" />
+                android:maxLength="8"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -60,7 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginStart="8dp"
+            android:hint="@string/birth_date">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/birthDateText"
@@ -68,8 +71,7 @@
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_edit"
                 android:clickable="true"
-                android:focusable="false"
-                android:hint="Fecha de Nacimiento" />
+                android:focusable="false"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -77,14 +79,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginStart="8dp"
+            android:hint="@string/school">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/schoolText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_edit"
-                android:hint="Escuela" />
+                android:focusableInTouchMode="true"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -92,14 +95,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginStart="8dp"
+            android:hint="@string/first_lesson_date">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/firstClassText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_edit"
-                android:hint="Fecha de ingreso"
                 android:focusable="false"
                 android:clickable="true"/>
         </android.support.design.widget.TextInputLayout>
@@ -109,14 +112,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginStart="8dp"
+            android:hint="@string/last_class">
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/lastClassText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_edit"
-                android:hint="Ultima Clase asistina"
                 android:focusable="false"
                 android:clickable="true"/>
         </android.support.design.widget.TextInputLayout>

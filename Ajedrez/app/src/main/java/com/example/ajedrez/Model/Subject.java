@@ -1,13 +1,22 @@
 package com.example.ajedrez.Model;
 
 public class Subject {
-    String name;
+    String title;
+    String fileName;
 
-    public Subject(String name) {
-        this.name = name;
+    //DO NOT REMOVE
+    public Subject() {}
+
+    public Subject(String title, String fileName) {
+        this.title = title;
+        this.fileName = fileName;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }

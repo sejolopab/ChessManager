@@ -37,7 +37,7 @@ public class SubjectsListAdapter extends RecyclerView.Adapter<SubjectsListAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mName.setText(mValues.get(position).getName());
+        holder.mName.setText(mValues.get(position).getTitle());
         holder.mContentView.setText("");
 
         /*holder.mView.setOnClickListener(new View.OnClickListener() {

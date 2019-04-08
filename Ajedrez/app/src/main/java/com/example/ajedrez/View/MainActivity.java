@@ -1,7 +1,6 @@
 package com.example.ajedrez.View;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +13,8 @@ import android.view.MenuItem;
 
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
+import com.example.ajedrez.Utils.DownloadManager;
+import com.example.ajedrez.Utils.GenericMethodsManager;
 import com.example.ajedrez.View.Assistance.StudentsAssistListFragment;
 import com.example.ajedrez.View.Assistance.StudentsAssistListFragment.StudentsAssistanceListener;
 import com.example.ajedrez.View.Lessons.LessonsListFragment;
@@ -124,9 +125,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_subjects) {
             showSubjectsFragment();
         } else if (id == R.id.nav_share) {
-
+            DownloadManager.getInstance().download(MainActivity.this, "2_Notacion_Algebraica.pdf");
         } else if (id == R.id.nav_send) {
-
+            GenericMethodsManager.getInstance().sendMessage(this);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

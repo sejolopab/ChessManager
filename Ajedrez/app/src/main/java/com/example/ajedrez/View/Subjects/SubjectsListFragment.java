@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +61,15 @@ public class SubjectsListFragment extends Fragment {
     }
 
     public void loadSubjects() {
-        Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("subjects");
+        Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("subjects").child("Principiante");
         studentsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 subjectList = new ArrayList<>();
-                for(DataSnapshot subjects :dataSnapshot.getChildren()){
-                    Subject subject = new Subject(subjects.getKey());
-                    subjectList.add(subject);
+                for(DataSnapshot subject :dataSnapshot.getChildren()){
+                    Subject newSubject = subject.getValue(Subject.class);
+                    //Subject subject = new Subject(subjects.getKey());
+                    subjectList.add(newSubject);
                 }
                 adapter.setSubjectsList(subjectList);
                 adapter.notifyDataSetChanged();
