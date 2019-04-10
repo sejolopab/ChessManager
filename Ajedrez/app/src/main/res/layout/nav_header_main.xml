@@ -37,5 +37,5 @@
         android:id="@+id/textView"
         android:textColor="@android:color/black"
         android:alpha="0.5"
-        android:textSize="10sp"/>
+        android:textSize="@dimen/small_text"/>
 </LinearLayout>
