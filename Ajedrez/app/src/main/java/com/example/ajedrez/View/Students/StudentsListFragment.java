@@ -3,8 +3,11 @@ package com.example.ajedrez.View.Students;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ public class StudentsListFragment extends Fragment {
     private RecyclerView recyclerView;
     private StudentsListAdapter adapter;
     private List<Student> studentsList;
+    private AppCompatEditText searchText;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -57,9 +61,36 @@ public class StudentsListFragment extends Fragment {
         FirebaseApp.initializeApp(getContext());
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
         recyclerView = view.findViewById(R.id.studentsList);
+        searchText = view.findViewById(R.id.searchText);
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+
         FloatingActionButton add = view.findViewById(R.id.addStudent);
         add.setOnClickListener(v -> mListener.showAddStudentScreen());
         return view;
+    }
+
+    private void filter(String text) {
+        List<Student> filteredList = new ArrayList<>();
+
+        for (Student item : studentsList) {
+            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+
+        adapter.setStudentsList(filteredList);
+        adapter.notifyDataSetChanged();
     }
 
     public void loadStudents() {
