@@ -7,7 +7,7 @@
     android:elevation="@dimen/small_dimen"
     android:layout_margin="@dimen/small_dimen"
     android:padding="@dimen/small_dimen"
-    android:background="@android:color/background_light">
+    android:background="@drawable/assistance_swipe_item">
 
     <TextView
         android:id="@+id/name"
