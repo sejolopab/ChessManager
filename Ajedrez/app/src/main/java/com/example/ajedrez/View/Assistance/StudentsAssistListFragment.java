@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,7 @@ public class StudentsAssistListFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Assistance> assistanceList;
     private String todayDate = GenericMethodsManager.getInstance().getSimpleDate();
+    private AppCompatEditText searchText;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference assistanceRef = database.getReference("assistance");
@@ -65,8 +69,45 @@ public class StudentsAssistListFragment extends Fragment {
         adapter = new AssistanceListAdapter(assistanceList, mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+        searchText = view.findViewById(R.id.searchText);
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                List<Assistance> filteredList = filter(s.toString());
+                adapter.setAssistanceList(filteredList);
+                adapter.notifyDataSetChanged();
+            }
+        });
         setupSwipeListener();
         loadAssistance();
+    }
+
+    public List<Assistance> filter(String text) {
+        List<Assistance> filteredList = new ArrayList<>();
+
+        for (Assistance item : assistanceList) {
+            if (item.getStudent().getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+            if (item.getStudent().getSchool() != null) {
+                if (item.getStudent().getSchool().toLowerCase().contains(text.toLowerCase())) {
+                    filteredList.add(item);
+                }
+            }
+            if (item.getStudent().getBirthDay() != null) {
+                if (item.getStudent().getBirthDay().contains(text)) {
+                    filteredList.add(item);
+                }
+            }
+        }
+
+        return filteredList;
     }
 
     private void loadAssistance() {

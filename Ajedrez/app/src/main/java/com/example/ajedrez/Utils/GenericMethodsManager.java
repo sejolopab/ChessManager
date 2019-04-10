@@ -8,8 +8,11 @@ import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.widget.Toast;
 
+import com.example.ajedrez.Model.Student;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,6 +57,28 @@ public class GenericMethodsManager {
                         appCompatEditText.setText(day + "/" + (month1 + 1) + "/" + year1), year, month, dayOfMonth);
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         datePickerDialog.show();
+    }
+
+    public List<Student> filter(String text, List<Student> studentsList) {
+        List<Student> filteredList = new ArrayList<>();
+
+        for (Student item : studentsList) {
+            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+            if (item.getSchool() != null) {
+                if (item.getSchool().toLowerCase().contains(text.toLowerCase())) {
+                    filteredList.add(item);
+                }
+            }
+            if (item.getBirthDay() != null) {
+                if (item.getBirthDay().contains(text)) {
+                    filteredList.add(item);
+                }
+            }
+        }
+
+        return filteredList;
     }
 
     public void sendMessage(Activity activity) {

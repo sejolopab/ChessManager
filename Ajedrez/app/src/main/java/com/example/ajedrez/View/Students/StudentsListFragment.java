@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
+import com.example.ajedrez.Utils.GenericMethodsManager;
 import com.example.ajedrez.View.MainActivity;
 
 import com.google.firebase.FirebaseApp;
@@ -71,26 +72,15 @@ public class StudentsListFragment extends Fragment {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                filter(s.toString());
+                List<Student> filteredList = GenericMethodsManager.getInstance().filter(s.toString(), studentsList);
+                adapter.setStudentsList(filteredList);
+                adapter.notifyDataSetChanged();
             }
         });
 
         FloatingActionButton add = view.findViewById(R.id.addStudent);
         add.setOnClickListener(v -> mListener.showAddStudentScreen());
         return view;
-    }
-
-    private void filter(String text) {
-        List<Student> filteredList = new ArrayList<>();
-
-        for (Student item : studentsList) {
-            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item);
-            }
-        }
-
-        adapter.setStudentsList(filteredList);
-        adapter.notifyDataSetChanged();
     }
 
     public void loadStudents() {
