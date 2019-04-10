@@ -32,7 +32,12 @@ public class StudentsAssistListFragment extends Fragment {
     private AssistanceListAdapter adapter;
     private RecyclerView recyclerView;
     private List<Assistance> assistanceList;
-    private String todaysDate = GenericMethodsManager.getInstance().getSimpleDate();
+    private String todayDate = GenericMethodsManager.getInstance().getSimpleDate();
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference assistanceRef = database.getReference("assistance");
+    DatabaseReference studentsRef = database.getReference("students");
+    List<Student> studentList = new ArrayList<>();
 
     public void setListener(MainActivity activity) {
         this.mListener = activity;
@@ -65,7 +70,7 @@ public class StudentsAssistListFragment extends Fragment {
     }
 
     private void loadAssistance() {
-        Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("assistance").child(todaysDate);
+        Query studentsQuery = assistanceRef.child(todayDate);
         studentsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -90,14 +95,17 @@ public class StudentsAssistListFragment extends Fragment {
     }
 
     private void loadStudents() {
-        Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("students");
-        studentsQuery.addValueEventListener(new ValueEventListener() {
+        studentsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 assistanceList = new ArrayList<>();
                 for(DataSnapshot data :dataSnapshot.getChildren()){
                     Student newStudent = data.getValue(Student.class);
+                    if (newStudent == null)
+                        continue;
+                    newStudent.setId(data.getKey());
                     assistanceList.add(new Assistance(newStudent));
+                    studentList.add(newStudent);
                 }
                 adapter.setAssistanceList(assistanceList);
                 adapter.notifyDataSetChanged();
@@ -143,9 +151,15 @@ public class StudentsAssistListFragment extends Fragment {
     }
 
     private void saveAssistance() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("assistance");
-        myRef.child(todaysDate).setValue(assistanceList);
+        assistanceRef.child(todayDate).setValue(assistanceList);
+        for (Assistance studentAssistance : assistanceList) {
+            if (studentAssistance.assisted == null)
+                continue;
+            if (studentAssistance.assisted) {
+                studentAssistance.getStudent().setLastClass(todayDate);
+                studentsRef.child(studentAssistance.getStudent().getId()).setValue(studentAssistance.getStudent());
+            }
+        }
         mListener.onAssistanceListSaved();
     }
 

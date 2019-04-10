@@ -37,7 +37,7 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
         Assistance studentAssistance = mAssistance.get(position);
         holder.mItem = studentAssistance;
         holder.mStudentName.setText(studentAssistance.getStudent().getName());
-        holder.mStudentSchool.setText(studentAssistance.getStudent().getSchool());
+        holder.mStudentSchool.setText(studentAssistance.getStudent().getLastClass());
 
         if (studentAssistance.assisted == null) {
         } else if (studentAssistance.assisted) {
