@@ -1,6 +1,7 @@
 package com.example.ajedrez.View.Students;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.GenericMethodsManager;
+import com.example.ajedrez.Utils.PreferenceFilters;
 import com.example.ajedrez.View.MainActivity;
 
 import com.google.firebase.FirebaseApp;
@@ -73,6 +75,7 @@ public class StudentsListFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 List<Student> filteredList = GenericMethodsManager.getInstance().filter(s.toString(), studentsList);
+                filteredList = PreferenceFilters.getInstance().applyPreferenceFilters(filteredList, getContext());
                 adapter.setStudentsList(filteredList);
                 adapter.notifyDataSetChanged();
             }
@@ -94,6 +97,8 @@ public class StudentsListFragment extends Fragment {
                     newStudent.setId(data.getKey());
                     studentsList.add(newStudent);
                 }
+
+                studentsList = PreferenceFilters.getInstance().applyPreferenceFilters(studentsList, getContext());
                 adapter.setStudentsList(studentsList);
                 adapter.notifyDataSetChanged();
             }

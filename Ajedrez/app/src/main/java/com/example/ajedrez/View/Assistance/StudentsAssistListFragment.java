@@ -18,6 +18,7 @@ import com.example.ajedrez.Model.Assistance;
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.GenericMethodsManager;
+import com.example.ajedrez.Utils.PreferenceFilters;
 import com.example.ajedrez.View.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +37,6 @@ public class StudentsAssistListFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Assistance> assistanceList;
     private String todayDate = GenericMethodsManager.getInstance().getSimpleDate();
-    private AppCompatEditText searchText;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference assistanceRef = database.getReference("assistance");
@@ -69,7 +69,7 @@ public class StudentsAssistListFragment extends Fragment {
         adapter = new AssistanceListAdapter(assistanceList, mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
-        searchText = view.findViewById(R.id.searchText);
+        AppCompatEditText searchText = view.findViewById(R.id.searchText);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -80,6 +80,7 @@ public class StudentsAssistListFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 List<Assistance> filteredList = filter(s.toString());
+                filteredList = PreferenceFilters.getInstance().applyPreferenceFilters(filteredList, getContext());
                 adapter.setAssistanceList(filteredList);
                 adapter.notifyDataSetChanged();
             }
@@ -121,6 +122,7 @@ public class StudentsAssistListFragment extends Fragment {
                     assistanceList.add(value);
                 }
                 if (assistanceList.size() > 0) {
+                    assistanceList = PreferenceFilters.getInstance().applyPreferenceFilters(assistanceList, getContext());
                     adapter.setAssistanceList(assistanceList);
                     adapter.notifyDataSetChanged();
                 } else {
@@ -148,6 +150,7 @@ public class StudentsAssistListFragment extends Fragment {
                     assistanceList.add(new Assistance(newStudent));
                     studentList.add(newStudent);
                 }
+                assistanceList = PreferenceFilters.getInstance().applyPreferenceFilters(assistanceList, getContext());
                 adapter.setAssistanceList(assistanceList);
                 adapter.notifyDataSetChanged();
             }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:title="Filtrar por centro educativo"
+        android:key="schoolPref"
+        android:summary="Ingresa el nombre de una escuela o colegio" />
+    <CheckBoxPreference
+        android:title="Filtrar por actividad"
+        android:defaultValue="true"
+        android:key="activityFilterPref"
+        android:summary="Activar para remover de las listas los estudiantes que tienen mas de 3 meses sin asistir a clases." />
+    <ListPreference
+        android:title="Categorias de nacionales"
+        android:summary="Elegir para mostrar solamente una categoria de las usadas en juegos nacionales"
+        android:key="catNacPref"
+        android:defaultValue="1"
+        android:entries="@array/cat_nac"
+        android:entryValues="@array/cat_nac_values" />
+    <ListPreference
+        android:title="Categorias de estudiantiles"
+        android:summary="Elegir para mostrar solamente una categoria de las usadas en los juegos estudiantiles"
+        android:key="catEstPref"
+        android:defaultValue="1"
+        android:entries="@array/cat_est"
+        android:entryValues="@array/cat_est_values" />
+</PreferenceScreen>

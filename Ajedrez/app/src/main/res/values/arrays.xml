@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cat_est">
+        <item>Categoria A</item>
+        <item>Categoria B</item>
+        <item>Categoria C</item>
+        <item>Categoria D</item>
+        <item>Ninguna</item>
+    </string-array>
+
+    <string-array name="cat_est_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="cat_nac">
+        <item>Categoria Sub 12</item>
+        <item>Categoria Sub 16</item>
+        <item>Categoria Sub 20</item>
+        <item>Ninguna</item>
+    </string-array>
+
+    <string-array name="cat_nac_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>0</item>
+    </string-array>
+</resources>
