@@ -79,10 +79,15 @@ public class StudentsAssistListFragment extends Fragment {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                List<Assistance> filteredList = filter(s.toString());
-                filteredList = PreferenceFilters.getInstance().applyPreferenceFilters(filteredList, getContext());
-                adapter.setAssistanceList(filteredList);
-                adapter.notifyDataSetChanged();
+                if (!s.toString().isEmpty()) {
+                    List<Assistance> filteredList = filter(s.toString());
+                    filteredList = PreferenceFilters.getInstance().applyPreferenceFilters(filteredList, getContext());
+                    adapter.setAssistanceList(filteredList);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    adapter.setAssistanceList(assistanceList);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
         setupSwipeListener();
@@ -95,10 +100,12 @@ public class StudentsAssistListFragment extends Fragment {
         for (Assistance item : assistanceList) {
             if (item.getStudent().getName().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
+                continue;
             }
             if (item.getStudent().getSchool() != null) {
                 if (item.getStudent().getSchool().toLowerCase().contains(text.toLowerCase())) {
                     filteredList.add(item);
+                    continue;
                 }
             }
             if (item.getStudent().getBirthDay() != null) {
@@ -176,19 +183,22 @@ public class StudentsAssistListFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder,
                                  int swipeDir) {
-                int position = viewHolder.getAdapterPosition();
-                Assistance tStudent = assistanceList.get(position);
+                AssistanceListAdapter.AssistanceViewHolder vHolder = (AssistanceListAdapter.AssistanceViewHolder) viewHolder;
+                Assistance tStudent = vHolder.getItem();
+                for (Assistance assistance: assistanceList) {
+                    if (assistance.getStudent().getName().equals(tStudent.getStudent().getName())) {
+                        //assistanceList.remove(assistance);
+                        //assistanceList.add(tStudent);
 
-                assistanceList.remove(position);
-                assistanceList.add(tStudent);
+                        if (swipeDir == 4) {
+                            tStudent.setAssisted(true);
+                        } else {
+                            tStudent.setAssisted(false);
+                        }
 
-                if (swipeDir == 4) {
-                    tStudent.setAssisted(true);
-                } else {
-                    tStudent.setAssisted(false);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
-
-                adapter.notifyDataSetChanged();
             }
         });
         itemTouchHelper.attachToRecyclerView(recyclerView);

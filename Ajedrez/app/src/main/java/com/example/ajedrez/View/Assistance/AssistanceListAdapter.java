@@ -93,5 +93,9 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
         public String toString() {
             return super.toString() + " '" + mStudentSchool.getText() + "'";
         }
+
+        public Assistance getItem() {
+            return mItem;
+        }
     }
 }
