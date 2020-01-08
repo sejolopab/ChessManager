@@ -42,11 +42,11 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
         holder.mStudentName.setTextColor(Color.BLACK);
         holder.mStudentSchool.setTextColor(Color.BLACK);
 
-        if (studentAssistance.assisted == null) {
+        if (studentAssistance.getAssisted() == null) {
             holder.mView.setBackgroundResource(R.drawable.assistance_swipe_item);
             holder.mStudentName.setTextColor(Color.BLACK);
             holder.mStudentSchool.setTextColor(Color.BLACK);
-        } else if (studentAssistance.assisted) {
+        } else if (studentAssistance.getAssisted()) {
             holder.mView.setBackgroundResource(R.color.colorGreen);
             holder.mStudentName.setTextColor(Color.WHITE);
             holder.mStudentSchool.setTextColor(Color.WHITE);

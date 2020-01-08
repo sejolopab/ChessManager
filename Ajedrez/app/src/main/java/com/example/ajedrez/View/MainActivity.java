@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.ajedrez.Model.Lesson;
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.DownloadManager;
@@ -195,6 +196,16 @@ public class MainActivity extends AppCompatActivity
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(R.id.content_container, InfoStudentFragment.newInstance(student))
                 .commitAllowingStateLoss();
+    }
+
+    @Override
+    public void showLessonInfoScreen(Lesson lesson) {
+        /*getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.content_container, InfoStudentFragment.newInstance(lesson))
+                .commitAllowingStateLoss();*/
     }
 
     @Override

@@ -207,11 +207,12 @@ public class StudentsAssistListFragment extends Fragment {
     private void saveAssistance() {
         assistanceRef.child(todayDate).setValue(assistanceList);
         for (Assistance studentAssistance : assistanceList) {
-            if (studentAssistance.assisted == null)
+            if (studentAssistance.getAssisted() == null)
                 continue;
-            if (studentAssistance.assisted) {
+            if (studentAssistance.getAssisted()) {
                 studentAssistance.getStudent().setLastClass(todayDate);
-                studentsRef.child(studentAssistance.getStudent().getId()).setValue(studentAssistance.getStudent());
+                studentsRef.child(studentAssistance.getStudent().getId())
+                        .setValue(studentAssistance.getStudent());
             }
         }
         mListener.onAssistanceListSaved();
