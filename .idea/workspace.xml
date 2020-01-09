@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d78e0f3f-dbb6-4529-9dbb-2277a768fa43" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Ajedrez/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Ajedrez/app/src/main/java/com/example/ajedrez/View/Assistance/StudentsAssistListFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="74" column="92" lean-forward="true" selection-start-line="74" selection-start-column="92" selection-end-line="74" selection-end-column="92" />
+            <state relative-caret-position="136">
+              <caret line="70" column="41" lean-forward="true" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -24,7 +24,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Ajedrez/app/src/main/java/com/example/ajedrez/View/Assistance/AssistanceListAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
+            <state relative-caret-position="1088">
               <caret line="80" column="38" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
             </state>
           </provider>
@@ -40,11 +40,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="44" />
-    <option name="y" value="88" />
-    <option name="width" value="1396" />
-    <option name="height" value="735" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -55,103 +55,8 @@
         <subPane>
           <expand>
             <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-              <item name="Ajedrez" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-              <item name="Ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-              <item name="Ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-              <item name="Ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-              <item name="Ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-              <item name="Ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-              <item name="Ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="example" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-              <item name="Ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="example" type="462c0819:PsiDirectoryNode" />
-              <item name="ajedrez" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-              <item name="Ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="example" type="462c0819:PsiDirectoryNode" />
-              <item name="ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="View" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ChessManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ChessManager" type="462c0819:PsiDirectoryNode" />
-              <item name="Ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="example" type="462c0819:PsiDirectoryNode" />
-              <item name="ajedrez" type="462c0819:PsiDirectoryNode" />
-              <item name="View" type="462c0819:PsiDirectoryNode" />
-              <item name="Assistance" type="462c0819:PsiDirectoryNode" />
+              <item name="MyCoolApp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MyCoolApp" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -165,8 +70,9 @@
     <property name="android.project.structure.last.selected" value="SDK Location" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Ajedrez" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -194,39 +100,45 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="44" y="88" width="1396" height="735" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.33963636" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2457356" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
       <window_info id="Resources Explorer" order="5" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Find" />
+      <window_info anchor="bottom" id="Run" />
+      <window_info anchor="bottom" id="Debug" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Terminal" order="2" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="4" />
+      <window_info anchor="right" id="Flutter Inspector" />
+      <window_info anchor="right" id="Flutter Outline" />
+      <window_info anchor="right" id="Android WiFi ADB" />
+      <window_info anchor="right" id="Flutter Performance" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Theme Preview" order="1" />
       <window_info anchor="right" id="Palette&#9;" order="2" />
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Ajedrez/app/src/main/java/com/example/ajedrez/View/Assistance/AssistanceListAdapter.java">
+    <entry file="file://$PROJECT_DIR$/Ajedrez/app/src/main/java/com/example/ajedrez/View/Assistance/StudentsAssistListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="80" column="38" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
+        <state relative-caret-position="136">
+          <caret line="70" column="41" lean-forward="true" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Ajedrez/app/src/main/java/com/example/ajedrez/View/Assistance/StudentsAssistListFragment.java">
+    <entry file="file://$PROJECT_DIR$/Ajedrez/app/src/main/java/com/example/ajedrez/View/Assistance/AssistanceListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="74" column="92" lean-forward="true" selection-start-line="74" selection-start-column="92" selection-end-line="74" selection-end-column="92" />
+        <state relative-caret-position="1088">
+          <caret line="80" column="38" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
         </state>
       </provider>
     </entry>

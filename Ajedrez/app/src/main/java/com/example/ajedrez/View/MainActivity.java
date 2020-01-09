@@ -19,6 +19,7 @@ import com.example.ajedrez.Utils.DownloadManager;
 import com.example.ajedrez.Utils.GenericMethodsManager;
 import com.example.ajedrez.View.Assistance.StudentsAssistListFragment;
 import com.example.ajedrez.View.Assistance.StudentsAssistListFragment.StudentsAssistanceListener;
+import com.example.ajedrez.View.Lessons.LessonInfoFragment;
 import com.example.ajedrez.View.Lessons.LessonsListFragment;
 import com.example.ajedrez.View.Students.InfoStudentFragment;
 import com.example.ajedrez.View.Students.NewStudentFragment;
@@ -30,12 +31,13 @@ import com.example.ajedrez.View.Subjects.SubjectsListFragment;
 import com.example.ajedrez.View.Subjects.SubjectsListFragment.SubjectsListener;
 import com.example.ajedrez.View.Students.NewStudentFragment.NewStudentListener;
 import com.example.ajedrez.View.Students.InfoStudentFragment.StudentInfoListener;
+import com.example.ajedrez.View.Lessons.LessonInfoFragment.LessonInfoListener;
 
 import com.google.firebase.FirebaseApp;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, StudentsAssistanceListener,
-        StudentsListener, LessonsListener, SubjectsListener, NewStudentListener, StudentInfoListener {
+        StudentsListener, LessonsListener, SubjectsListener, NewStudentListener, StudentInfoListener, LessonInfoListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,12 +202,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showLessonInfoScreen(Lesson lesson) {
-        /*getSupportFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
-                .replace(R.id.content_container, InfoStudentFragment.newInstance(lesson))
-                .commitAllowingStateLoss();*/
+                .replace(R.id.content_container, LessonInfoFragment.newInstance(lesson))
+                .commitAllowingStateLoss();
     }
 
     @Override
@@ -231,5 +233,10 @@ public class MainActivity extends AppCompatActivity
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(R.id.content_container, SubjectReaderFragment.newInstance(fileName))
                 .commitAllowingStateLoss();
+    }
+
+    @Override
+    public void showStudentInfo(){
+
     }
 }

@@ -35,7 +35,7 @@ public class InfoStudentFragment extends Fragment {
     public static InfoStudentFragment newInstance(Student student) {
         InfoStudentFragment fragment = new InfoStudentFragment();
         Bundle args = new Bundle();
-        args.putParcelable(STUDENT_PARAM, student);
+        args.putSerializable(STUDENT_PARAM, student);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +49,7 @@ public class InfoStudentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mStudent = bundle.getParcelable(STUDENT_PARAM);
+            mStudent = (Student) bundle.getSerializable(STUDENT_PARAM);
         }
     }
 

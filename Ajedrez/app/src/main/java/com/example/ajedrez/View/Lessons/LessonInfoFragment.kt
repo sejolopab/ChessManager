@@ -10,17 +10,16 @@ import com.example.ajedrez.Model.Lesson
 
 import com.example.ajedrez.R
 
-private const val ARG_LESSON = "lesson"
-
 class LessonInfoFragment : Fragment() {
 
+    private val LESSON = "lesson"
     private var lesson: Lesson? = null
     private var listener: LessonInfoListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            //lesson = it.getParcelable<Lesson>(ARG_LESSON)
+            lesson = it.getSerializable(LESSON) as Lesson?
         }
     }
 
@@ -28,11 +27,6 @@ class LessonInfoFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_lesson_info, container, false)
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed() {
-        listener?.showStudentInfo()
     }
 
     override fun onAttach(context: Context) {
@@ -54,20 +48,11 @@ class LessonInfoFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LessonInfoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(lesson: Lesson) =
                 LessonInfoFragment().apply {
                     arguments = Bundle().apply {
-                        //putParcelable(ARG_LESSON, lesson)
+                        putSerializable(LESSON, lesson)
                     }
                 }
     }

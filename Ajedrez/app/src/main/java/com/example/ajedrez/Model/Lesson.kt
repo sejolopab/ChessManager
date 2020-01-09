@@ -1,6 +1,8 @@
 package com.example.ajedrez.Model
 
-class Lesson(val date: String, val assistance: List<Assistance>) {
+import java.io.Serializable
+
+class Lesson(val date: String, val assistance: List<Assistance>): Serializable {
 
     val numberOfAssists: Int
         get() {
@@ -11,5 +13,4 @@ class Lesson(val date: String, val assistance: List<Assistance>) {
             }
             return assists
         }
-
 }

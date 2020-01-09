@@ -36,7 +36,7 @@ public class StudentsAssistListFragment extends Fragment {
     private AssistanceListAdapter adapter;
     private RecyclerView recyclerView;
     private List<Assistance> assistanceList;
-    private String todayDate = GenericMethodsManager.getInstance().getSimpleDate();
+    private String todayDate = GenericMethodsManager.getInstance().getServerDateFormat();
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference assistanceRef = database.getReference("assistance");
@@ -98,18 +98,26 @@ public class StudentsAssistListFragment extends Fragment {
         List<Assistance> filteredList = new ArrayList<>();
 
         for (Assistance item : assistanceList) {
-            if (item.getStudent().getName().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item);
-                continue;
-            }
-            if (item.getStudent().getSchool() != null) {
-                if (item.getStudent().getSchool().toLowerCase().contains(text.toLowerCase())) {
+
+            Student student = item.getStudent();
+            if (student == null) { continue; }
+
+            if (student.getName() != null) {
+                if (student.getName().toLowerCase().contains(text.toLowerCase())) {
                     filteredList.add(item);
                     continue;
                 }
             }
-            if (item.getStudent().getBirthDay() != null) {
-                if (item.getStudent().getBirthDay().contains(text)) {
+
+            if (student.getSchool() != null) {
+                if (student.getSchool().toLowerCase().contains(text.toLowerCase())) {
+                    filteredList.add(item);
+                    continue;
+                }
+            }
+
+            if (student.getBirthDay() != null) {
+                if (student.getBirthDay().contains(text)) {
                     filteredList.add(item);
                 }
             }
@@ -207,9 +215,9 @@ public class StudentsAssistListFragment extends Fragment {
     private void saveAssistance() {
         assistanceRef.child(todayDate).setValue(assistanceList);
         for (Assistance studentAssistance : assistanceList) {
-            if (studentAssistance.getAssisted() == null)
+            if (studentAssistance.getAssisted() == null ) {
                 continue;
-            if (studentAssistance.getAssisted()) {
+            } else if (studentAssistance.getAssisted()) {
                 studentAssistance.getStudent().setLastClass(todayDate);
                 studentsRef.child(studentAssistance.getStudent().getId())
                         .setValue(studentAssistance.getStudent());
