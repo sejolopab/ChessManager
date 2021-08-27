@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
@@ -115,8 +116,13 @@ public class InfoStudentFragment extends Fragment {
         AppCompatEditText lastClass = view.findViewById(R.id.lastClassText);
         lastClass.setText(mStudent.getLastClass());
 
+        CheckBox isActiveCheckbox = view.findViewById(R.id.isActiveCheckBox);
+        isActiveCheckbox.setChecked(mStudent.getActive());
+        isActiveCheckbox.setOnClickListener(view1 -> mStudent.setActive(isActiveCheckbox.isChecked()));
+
         FloatingActionButton floatingActionButton = view.findViewById(R.id.updateStudent);
         floatingActionButton.setOnClickListener(v -> updateStudent());
+
         return view;
     }
 

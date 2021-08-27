@@ -28,7 +28,6 @@ public class PreferenceFilters {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         List filteredList;
         filteredList = schoolFilter(prefs.getString(SCHOOL_PREF, ""), studentList);
-        filteredList = activityFilter(prefs.getBoolean(ACTIVITY_PREF, true), filteredList);
         return filteredList;
     }
 
@@ -53,9 +52,4 @@ public class PreferenceFilters {
 
         return filteredList;
     }
-
-    private List activityFilter(Boolean applayActivityFilter, List studentList) {
-        return studentList;
-    }
-
 }

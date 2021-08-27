@@ -24,4 +24,7 @@
     <string name="last_class">Ultima clase asistida</string>
     <string name="file_not_found">File not found</string>
     <string name="search">Buscar</string>
+    <string name="activo">Activo</string>
+    <string name="fecha">Fecha</string>
+    <string name="grupo">Grupo</string>
 </resources>

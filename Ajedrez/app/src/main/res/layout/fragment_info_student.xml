@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_edit"
                 android:clickable="true"
-                android:focusable="false"/>
+                android:focusable="true"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_edit"
-                android:focusable="false"
+                android:focusable="true"
                 android:clickable="true"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -120,8 +120,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_edit"
-                android:focusable="false"
+                android:focusable="true"
                 android:clickable="true"/>
+
+            <CheckBox
+                android:id="@+id/isActiveCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="18sp"
+                android:text="@string/activo"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 

@@ -11,5 +11,5 @@ class Student : Serializable {
     var startingDate: String? = null
     var lastClass: String? = null
     var lessons: List<Lesson>? = null
-
+    var active: Boolean = true
 }

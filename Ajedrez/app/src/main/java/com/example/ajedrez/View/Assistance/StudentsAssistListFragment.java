@@ -36,7 +36,7 @@ public class StudentsAssistListFragment extends Fragment {
     private AssistanceListAdapter adapter;
     private RecyclerView recyclerView;
     private List<Assistance> assistanceList;
-    private String todayDate = GenericMethodsManager.getInstance().getServerDateFormat();
+    private final String todayDate = GenericMethodsManager.getInstance().getServerDateFormat();
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference assistanceRef = database.getReference("assistance");
@@ -46,7 +46,6 @@ public class StudentsAssistListFragment extends Fragment {
     public void setListener(MainActivity activity) {
         this.mListener = activity;
     }
-
 
     public static StudentsAssistListFragment newInstance() {
         return new StudentsAssistListFragment();
@@ -126,6 +125,19 @@ public class StudentsAssistListFragment extends Fragment {
         return filteredList;
     }
 
+    public List<Assistance> filterActiveStudents() {
+        List<Assistance> filteredList = new ArrayList<>();
+
+        for (Assistance item : assistanceList) {
+            Student student = item.getStudent();
+            if (student != null || student.getActive()) {
+                filteredList.add(item);
+            }
+        }
+
+        return filteredList;
+    }
+
     private void loadAssistance() {
         Query studentsQuery = assistanceRef.child(todayDate);
         studentsQuery.addValueEventListener(new ValueEventListener() {
@@ -159,7 +171,7 @@ public class StudentsAssistListFragment extends Fragment {
                 assistanceList = new ArrayList<>();
                 for(DataSnapshot data :dataSnapshot.getChildren()){
                     Student newStudent = data.getValue(Student.class);
-                    if (newStudent == null)
+                    if (newStudent == null || !newStudent.getActive())
                         continue;
                     newStudent.setId(data.getKey());
                     assistanceList.add(new Assistance(newStudent));
@@ -215,9 +227,8 @@ public class StudentsAssistListFragment extends Fragment {
     private void saveAssistance() {
         assistanceRef.child(todayDate).setValue(assistanceList);
         for (Assistance studentAssistance : assistanceList) {
-            if (studentAssistance.getAssisted() == null ) {
-                continue;
-            } else if (studentAssistance.getAssisted()) {
+            if (studentAssistance.getAssisted() == null &&
+                    studentAssistance.getAssisted()) {
                 studentAssistance.getStudent().setLastClass(todayDate);
                 studentsRef.child(studentAssistance.getStudent().getId())
                         .setValue(studentAssistance.getStudent());

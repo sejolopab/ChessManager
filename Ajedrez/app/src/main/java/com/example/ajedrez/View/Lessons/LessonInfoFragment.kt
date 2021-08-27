@@ -12,20 +12,19 @@ import com.example.ajedrez.R
 
 class LessonInfoFragment : Fragment() {
 
-    private val LESSON = "lesson"
+    private val lessonKey = "lesson"
     private var lesson: Lesson? = null
     private var listener: LessonInfoListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            lesson = it.getSerializable(LESSON) as Lesson?
+            lesson = it.getSerializable(lessonKey) as Lesson?
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_lesson_info, container, false)
     }
 
@@ -52,7 +51,7 @@ class LessonInfoFragment : Fragment() {
         fun newInstance(lesson: Lesson) =
                 LessonInfoFragment().apply {
                     arguments = Bundle().apply {
-                        putSerializable(LESSON, lesson)
+                        putSerializable(lessonKey, lesson)
                     }
                 }
     }
