@@ -75,7 +75,7 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
         mAssistance = studentsList;
     }
 
-    public class AssistanceViewHolder extends RecyclerView.ViewHolder {
+    public static class AssistanceViewHolder extends RecyclerView.ViewHolder {
         final View mView;
         final TextView mStudentName;
         final TextView mStudentSchool;

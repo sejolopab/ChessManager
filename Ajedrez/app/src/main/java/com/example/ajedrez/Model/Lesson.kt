@@ -13,4 +13,16 @@ class Lesson(val date: String, val assistance: List<Assistance>): Serializable {
             }
             return assists
         }
+
+    val students: List<Assistance>
+        get() {
+            val filteredList: MutableList<Assistance> = ArrayList()
+            for (student in assistance) {
+                if (student.assisted == null) continue
+                if (student.assisted == true) {
+                    filteredList.add(student)
+                }
+            }
+            return filteredList
+        }
 }

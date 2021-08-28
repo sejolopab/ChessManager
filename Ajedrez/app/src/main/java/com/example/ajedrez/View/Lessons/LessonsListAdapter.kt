@@ -9,7 +9,7 @@ import com.example.ajedrez.Model.Lesson
 import com.example.ajedrez.R
 import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener
 
-class LessonsListAdapter internal constructor(private var mValues: List<Lesson>,
+class LessonsListAdapter internal constructor(private var mLessonsList: List<Lesson>,
                                               private val mListener: LessonsListener?) : RecyclerView.Adapter<LessonsListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,7 +19,7 @@ class LessonsListAdapter internal constructor(private var mValues: List<Lesson>,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val lesson = mValues[position]
+        val lesson = mLessonsList[position]
         holder.mItem = lesson
         holder.mDate.text = lesson.date
         holder.mAttendance.text = lesson.numberOfAssists.toString()
@@ -29,11 +29,11 @@ class LessonsListAdapter internal constructor(private var mValues: List<Lesson>,
     }
 
     override fun getItemCount(): Int {
-        return mValues.size
+        return mLessonsList.size
     }
 
     fun setLessonsList(lessonsList: List<Lesson>) {
-        mValues = lessonsList
+        mLessonsList = lessonsList
     }
 
     inner class ViewHolder internal constructor(val mView: View) : RecyclerView.ViewHolder(mView) {
