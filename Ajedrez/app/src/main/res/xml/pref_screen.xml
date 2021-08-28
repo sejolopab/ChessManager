@@ -6,21 +6,21 @@
         android:summary="Ingresa el nombre de una escuela o colegio" />
     <CheckBoxPreference
         android:title="Filtrar por actividad"
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:key="activityFilterPref"
-        android:summary="Activar para remover de las listas los estudiantes que tienen mas de 3 meses sin asistir a clases." />
+        android:summary="Activar mostrar solamente los estudiantes activos en el sistema" />
     <ListPreference
         android:title="Categorias de nacionales"
         android:summary="Elegir para mostrar solamente una categoria de las usadas en juegos nacionales"
         android:key="catNacPref"
-        android:defaultValue="1"
+        android:defaultValue="0"
         android:entries="@array/cat_nac"
         android:entryValues="@array/cat_nac_values" />
     <ListPreference
         android:title="Categorias de estudiantiles"
         android:summary="Elegir para mostrar solamente una categoria de las usadas en los juegos estudiantiles"
         android:key="catEstPref"
-        android:defaultValue="1"
+        android:defaultValue="0"
         android:entries="@array/cat_est"
         android:entryValues="@array/cat_est_values" />
 </PreferenceScreen>

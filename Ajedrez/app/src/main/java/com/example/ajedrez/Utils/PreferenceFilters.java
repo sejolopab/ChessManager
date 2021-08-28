@@ -26,30 +26,56 @@ public class PreferenceFilters {
 
     public List applyPreferenceFilters(List studentList, Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        List filteredList;
-        filteredList = schoolFilter(prefs.getString(SCHOOL_PREF, ""), studentList);
-        return filteredList;
-    }
+        List filteredList = new ArrayList();
+        String school = prefs.getString(SCHOOL_PREF, "");
+        Boolean activePref = prefs.getBoolean(ACTIVITY_PREF, false);
 
-    private List schoolFilter(String text, List studentsList) {
-        List<Object> filteredList = new ArrayList<>();
+        for (Object student : studentList) {
+            boolean addToFilteredList = true;
+            // School filter exist
+            if (school != null && !school.equals("")) {
+                if (!appliesForSchoolFilter(student, school)) {
+                    addToFilteredList = false;
+                }
+            }
 
-        for (Object item : studentsList) {
-            if (item instanceof Student) {
-                if (((Student)item).getSchool() != null) {
-                    if (((Student)item).getSchool().toLowerCase().contains(text.toLowerCase())) {
-                        filteredList.add(item);
-                    }
+            // Activity filter exist
+            if (activePref) {
+                if (!appliesForActivityFilter(student)) {
+                    addToFilteredList = false;
                 }
-            } else {
-                if (((Assistance)item).getStudent().getSchool() != null) {
-                    if (((Assistance)item).getStudent().getSchool().toLowerCase().contains(text.toLowerCase())) {
-                        filteredList.add(item);
-                    }
-                }
+            }
+
+            if (addToFilteredList) {
+                filteredList.add(student);
             }
         }
 
         return filteredList;
+    }
+
+    private boolean appliesForSchoolFilter(Object object, String text) {
+        if (object instanceof Student) {
+            Student student = (Student) object;
+            if (student.getSchool() != null) {
+                return student.getSchool().toLowerCase().contains(text.toLowerCase());
+            }
+        } else {
+            Assistance student = (Assistance) object;
+            if (student.getStudent().getSchool() != null) {
+                return student.getStudent().getSchool().toLowerCase().contains(text.toLowerCase());
+            }
+        }
+        return false;
+    }
+
+    private boolean appliesForActivityFilter(Object object) {
+        if (object instanceof Student) {
+            Student student = (Student) object;
+            return student.getActive();
+        } else {
+            Assistance student = (Assistance) object;
+            return student.getStudent().getActive();
+        }
     }
 }

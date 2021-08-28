@@ -43,7 +43,7 @@ public class NewStudentFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_new_student, container, false);
         FloatingActionButton add = view.findViewById(R.id.saveStudent);
-        add.setOnClickListener(v -> createUser());
+        add.setOnClickListener(v -> createStudent());
         AppCompatEditText nameText = view.findViewById(R.id.nameText);
         nameText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -101,7 +101,7 @@ public class NewStudentFragment extends Fragment {
         return view;
     }
 
-    private void createUser(){
+    private void createStudent(){
         if (newStudent.getName() == null) {
             AlertsManager.getInstance().showAlertDialog(getString(R.string.error_title), getString(R.string.error_name_required), getContext());
             return;
