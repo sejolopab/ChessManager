@@ -132,15 +132,14 @@
             android:text="@string/activo"/>
 
         <Button
-            android:id="@+id/deleteBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/eliminar"
+            android:text="Eliminar"
+            android:layout_marginStart="@dimen/small_dimen"
             android:drawableStart="@drawable/ic_delete"
             android:drawableTint="@color/colorRed"
             android:textColor="@color/colorRed"
-            android:background="@android:color/transparent"
-            android:layout_marginStart="4dp"/>
+            android:background="@android:color/transparent"/>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

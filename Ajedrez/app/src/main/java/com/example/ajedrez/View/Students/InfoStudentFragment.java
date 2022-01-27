@@ -10,6 +10,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.example.ajedrez.Model.Student;
@@ -25,6 +27,7 @@ public class InfoStudentFragment extends Fragment {
     private StudentInfoListener mListener;
     private static final String STUDENT_PARAM = "param1";
     private Student mStudent;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -52,6 +55,7 @@ public class InfoStudentFragment extends Fragment {
         if (bundle != null) {
             mStudent = (Student) bundle.getSerializable(STUDENT_PARAM);
         }
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
     @Override
@@ -122,6 +126,11 @@ public class InfoStudentFragment extends Fragment {
 
         FloatingActionButton floatingActionButton = view.findViewById(R.id.updateStudent);
         floatingActionButton.setOnClickListener(v -> updateStudent());
+
+        Button deleteButton = view.findViewById(R.id.deleteBtn);
+        deleteButton.setOnClickListener(v -> {
+
+        });
 
         return view;
     }

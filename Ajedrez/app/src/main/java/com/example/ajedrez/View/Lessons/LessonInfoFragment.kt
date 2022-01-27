@@ -1,6 +1,7 @@
 package com.example.ajedrez.View.Lessons
 
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -18,23 +19,20 @@ class LessonInfoFragment : Fragment() {
     private var mListener: LessonInfoListener? = null
     private var recyclerView: RecyclerView? = null
     private var adapter: LessonInfoAdapter? = null
-    fun setListener(activity: MainActivity?) {
-        mListener = activity
-    }
-    /*private var mListener: LessonsListFragment.LessonsListener? = null
-    private var recyclerView: RecyclerView? = null
-    private var adapter: LessonsListAdapter? = null
-    private var lessonList: List<Lesson>? = null
-    fun setListener(activity: MainActivity?) {
-        mListener = activity
-    }*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_lesson_info, container, false)
         recyclerView = view.findViewById(R.id.lessonAssistance)
-        //lessonList = ArrayList()
+
+        val editButton: FloatingActionButton = view.findViewById(R.id.editLessonFBTN)
+        editButton.setOnClickListener { editButtonAction() }
+
         return view
+    }
+
+    fun editButtonAction() {
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

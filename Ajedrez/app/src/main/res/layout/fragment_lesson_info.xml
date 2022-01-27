@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".View.Lessons.LessonInfoFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/assistance_title"
-        android:textAlignment="center"
-        android:layout_margin="@dimen/text_margin"
-        style="@style/TextAppearance.MaterialComponents.Headline4">
-    </TextView>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lessonAssistance"
-        android:layout_width="match_parent"
+    <LinearLayout
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" />
+        android:layout_width="match_parent"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/assistance_title"
+            android:textAlignment="center"
+            android:layout_margin="@dimen/text_margin"
+            style="@style/TextAppearance.MaterialComponents.Headline4">
+        </TextView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lessonAssistance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/editLessonFBTN"
+        app:srcCompat="@drawable/ic_edit"
+        android:layout_width="81dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="@android:color/holo_red_dark"
+        android:tint="@android:color/white"/>
+
+</android.support.design.widget.CoordinatorLayout>
