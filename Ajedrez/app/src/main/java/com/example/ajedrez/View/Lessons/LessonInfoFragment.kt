@@ -2,7 +2,6 @@ package com.example.ajedrez.View.Lessons
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import com.example.ajedrez.Model.Lesson
 
 import com.example.ajedrez.R
 import com.example.ajedrez.View.BaseFragment
-import com.example.ajedrez.View.MainActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
