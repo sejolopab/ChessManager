@@ -1,13 +1,8 @@
 package com.example.ajedrez.View.Students;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
-
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -69,7 +63,7 @@ public class InfoStudentFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_info_student, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_info, container, false);
         AppCompatEditText nameText = view.findViewById(R.id.nameText);
         nameText.setText(mStudent.getName());
         nameText.addTextChangedListener(new TextWatcher() {

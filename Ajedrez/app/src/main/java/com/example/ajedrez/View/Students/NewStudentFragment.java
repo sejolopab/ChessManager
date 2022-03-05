@@ -3,13 +3,13 @@ package com.example.ajedrez.View.Students;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
@@ -44,7 +44,7 @@ public class NewStudentFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_new_student, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_new, container, false);
         FloatingActionButton add = view.findViewById(R.id.saveStudent);
         add.setOnClickListener(v -> createStudent());
         AppCompatEditText nameText = view.findViewById(R.id.nameText);
@@ -99,6 +99,11 @@ public class NewStudentFragment extends BaseFragment {
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+        LinearLayout contentLayout = view.findViewById(R.id.contentLayout);
+        contentLayout.setOnClickListener(v -> {
+            hideKeyboardFrom(Objects.requireNonNull(getContext()),view);
         });
 
         return view;
