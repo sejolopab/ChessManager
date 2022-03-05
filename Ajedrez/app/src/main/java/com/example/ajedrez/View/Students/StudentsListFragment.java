@@ -1,10 +1,8 @@
 package com.example.ajedrez.View.Students;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.preference.Preference;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +11,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
@@ -26,7 +23,6 @@ import com.example.ajedrez.View.MainActivity;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -79,10 +75,15 @@ public class StudentsListFragment extends BaseFragment {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                List<Student> filteredList = GenericMethodsManager.getInstance().filter(s.toString(), studentsList);
-                filteredList = PreferenceFilters.getInstance().applyPreferenceFilters(filteredList, getContext());
-                adapter.setStudentsList(filteredList);
-                adapter.notifyDataSetChanged();
+                if (!s.toString().isEmpty()) {
+                    List<Student> filteredList = GenericMethodsManager.getInstance().filter(s.toString(), studentsList);
+                    filteredList = PreferenceFilters.getInstance().applyPreferenceFilters(filteredList, getContext());
+                    adapter.setStudentsList(filteredList);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    adapter.setStudentsList(studentsList);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -104,7 +105,7 @@ public class StudentsListFragment extends BaseFragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         studentsList = new ArrayList<>();
         adapter = new StudentsListAdapter(studentsList, mListener);

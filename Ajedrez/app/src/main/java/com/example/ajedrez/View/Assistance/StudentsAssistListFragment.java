@@ -3,7 +3,6 @@ package com.example.ajedrez.View.Assistance;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -113,12 +112,6 @@ public class StudentsAssistListFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
     }
 
     public List<Assistance> filter(String text) {
