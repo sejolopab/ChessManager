@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.ajedrez.Model.Subject;
 import com.example.ajedrez.R;
+import com.example.ajedrez.View.BaseFragment;
 import com.example.ajedrez.View.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,8 +22,9 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class SubjectsListFragment extends Fragment {
+public class SubjectsListFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private SubjectsListAdapter adapter;
@@ -52,6 +54,12 @@ public class SubjectsListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         loadSubjects();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
     }
 
     public void loadSubjects() {

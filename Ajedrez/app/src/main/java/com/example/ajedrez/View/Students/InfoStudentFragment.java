@@ -1,5 +1,9 @@
 package com.example.ajedrez.View.Students;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -11,23 +15,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.AlertsManager;
 import com.example.ajedrez.Utils.GenericMethodsManager;
+import com.example.ajedrez.View.BaseFragment;
 import com.example.ajedrez.View.MainActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class InfoStudentFragment extends Fragment {
+import java.util.Objects;
+
+public class InfoStudentFragment extends BaseFragment {
 
     private StudentInfoListener mListener;
     private static final String STUDENT_PARAM = "param1";
     private Student mStudent;
-
 
     /**
      * Use this factory method to create a new instance of
@@ -129,10 +137,24 @@ public class InfoStudentFragment extends Fragment {
 
         Button deleteButton = view.findViewById(R.id.deleteBtn);
         deleteButton.setOnClickListener(v -> {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("students");
+            myRef.child(Objects.requireNonNull(mStudent.getId())).removeValue();
+            mListener.onStudentInfoUpdated();
+        });
 
+        LinearLayout contentLayout = view.findViewById(R.id.contentLayout);
+        contentLayout.setOnClickListener(v -> {
+            hideKeyboardFrom(Objects.requireNonNull(getContext()),view);
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
     }
 
     private void updateStudent(){
@@ -146,7 +168,7 @@ public class InfoStudentFragment extends Fragment {
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("students");
-        myRef.child(mStudent.getId()).setValue(mStudent);
+        myRef.child(Objects.requireNonNull(mStudent.getId())).setValue(mStudent);
         mListener.onStudentInfoUpdated();
     }
 

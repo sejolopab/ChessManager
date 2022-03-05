@@ -11,9 +11,12 @@ import android.view.ViewGroup
 import com.example.ajedrez.Model.Lesson
 
 import com.example.ajedrez.R
+import com.example.ajedrez.View.BaseFragment
 import com.example.ajedrez.View.MainActivity
+import java.util.*
+import kotlin.collections.ArrayList
 
-class LessonInfoFragment : Fragment() {
+class LessonInfoFragment : BaseFragment() {
     private val lessonKey = "lesson"
     private var lesson: Lesson = Lesson("", ArrayList())
     private var mListener: LessonInfoListener? = null
@@ -42,6 +45,15 @@ class LessonInfoFragment : Fragment() {
 
         recyclerView!!.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView!!.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        BaseFragment.hideKeyboardFrom(
+            Objects.requireNonNull(context), Objects.requireNonNull(
+                view
+            )
+        )
     }
 
     interface LessonInfoListener {

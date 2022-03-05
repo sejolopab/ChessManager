@@ -15,11 +15,14 @@ import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.AlertsManager;
 import com.example.ajedrez.Utils.GenericMethodsManager;
+import com.example.ajedrez.View.BaseFragment;
 import com.example.ajedrez.View.MainActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class NewStudentFragment extends Fragment {
+import java.util.Objects;
+
+public class NewStudentFragment extends BaseFragment {
 
     private Student newStudent =  new Student();
     private NewStudentListener mListener;
@@ -114,6 +117,12 @@ public class NewStudentFragment extends Fragment {
         DatabaseReference myRef = database.getReference("students");
         myRef.push().setValue(newStudent);
         mListener.onStudentCreated();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
     }
 
     public interface NewStudentListener {

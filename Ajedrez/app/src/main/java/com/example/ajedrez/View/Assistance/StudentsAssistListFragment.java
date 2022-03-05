@@ -13,12 +13,15 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.ajedrez.Model.Assistance;
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.GenericMethodsManager;
 import com.example.ajedrez.Utils.PreferenceFilters;
+import com.example.ajedrez.Utils.Utils;
+import com.example.ajedrez.View.BaseFragment;
 import com.example.ajedrez.View.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,8 +32,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class StudentsAssistListFragment extends Fragment {
+public class StudentsAssistListFragment extends BaseFragment {
 
     private StudentsAssistanceListener mListener;
     private AssistanceListAdapter adapter;
@@ -89,8 +93,32 @@ public class StudentsAssistListFragment extends Fragment {
                 }
             }
         });
+
+        searchText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                Utils.Companion.hideKeyboard(v, Objects.requireNonNull(getContext()));
+            }
+        });
+
         setupSwipeListener();
         loadAssistance();
+
+        LinearLayout contentLayout = view.findViewById(R.id.contentLayout);
+        contentLayout.setOnClickListener(v -> {
+            hideKeyboardFrom(Objects.requireNonNull(getContext()), view);
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
     }
 
     public List<Assistance> filter(String text) {
@@ -139,6 +167,9 @@ public class StudentsAssistListFragment extends Fragment {
     }
 
     private void loadAssistance() {
+
+        loadStudents();
+
         Query studentsQuery = assistanceRef.child(todayDate);
         studentsQuery.addValueEventListener(new ValueEventListener() {
             @Override
@@ -149,11 +180,29 @@ public class StudentsAssistListFragment extends Fragment {
                     assistanceList.add(value);
                 }
                 if (assistanceList.size() > 0) {
-                    assistanceList = PreferenceFilters.getInstance().applyPreferenceFilters(assistanceList, getContext());
-                    adapter.setAssistanceList(assistanceList);
-                    adapter.notifyDataSetChanged();
+                    if (assistanceList.size() < studentList.size()) {
+                        Student tempStudent = null;
+                        for (Student student : studentList) {
+                            for (Assistance assistance : assistanceList) {
+                                if (student.getId().equals(assistance.getStudent().getId())) {
+                                    tempStudent = student;
+                                    break;
+                                }
+                            }
+                            if (tempStudent == null) {
+                                assistanceList.add(new Assistance(student));
+                                saveAssistance();
+                            }
+                        }
+                        loadAssistanceList();
+                    } else {
+                        loadAssistanceList();
+                    }
                 } else {
-                    loadStudents();
+                    for (Student student : studentList) {
+                        assistanceList.add(new Assistance(student));
+                    }
+                    loadAssistanceList();
                 }
             }
 
@@ -162,6 +211,12 @@ public class StudentsAssistListFragment extends Fragment {
 
             }
         });
+    }
+
+    private void loadAssistanceList(){
+        assistanceList = PreferenceFilters.getInstance().applyPreferenceFilters(assistanceList, getContext());
+        adapter.setAssistanceList(assistanceList);
+        adapter.notifyDataSetChanged();
     }
 
     private void loadStudents() {
@@ -174,12 +229,12 @@ public class StudentsAssistListFragment extends Fragment {
                     if (newStudent == null || !newStudent.getActive())
                         continue;
                     newStudent.setId(data.getKey());
-                    assistanceList.add(new Assistance(newStudent));
+                    //assistanceList.add(new Assistance(newStudent));
                     studentList.add(newStudent);
                 }
-                assistanceList = PreferenceFilters.getInstance().applyPreferenceFilters(assistanceList, getContext());
-                adapter.setAssistanceList(assistanceList);
-                adapter.notifyDataSetChanged();
+                //assistanceList = PreferenceFilters.getInstance().applyPreferenceFilters(assistanceList, getContext());
+                //adapter.setAssistanceList(assistanceList);
+                //adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -227,11 +282,12 @@ public class StudentsAssistListFragment extends Fragment {
     private void saveAssistance() {
         assistanceRef.child(todayDate).setValue(assistanceList);
         for (Assistance studentAssistance : assistanceList) {
-            if (studentAssistance.getAssisted() == null &&
-                    studentAssistance.getAssisted()) {
-                studentAssistance.getStudent().setLastClass(todayDate);
-                studentsRef.child(studentAssistance.getStudent().getId())
-                        .setValue(studentAssistance.getStudent());
+            if (studentAssistance.getAssisted() != null) {
+                if (studentAssistance.getAssisted()) {
+                    Objects.requireNonNull(studentAssistance.getStudent()).setLastClass(todayDate);
+                    studentsRef.child(Objects.requireNonNull(studentAssistance.getStudent().getId()))
+                            .setValue(studentAssistance.getStudent());
+                }
             }
         }
         mListener.onAssistanceListSaved();
@@ -239,5 +295,6 @@ public class StudentsAssistListFragment extends Fragment {
 
     public interface StudentsAssistanceListener {
         void onAssistanceListSaved();
+        void onAssistanceItemClick();
     }
 }

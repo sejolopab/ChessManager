@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.AlertsManager;
+import com.example.ajedrez.View.BaseFragment;
 import com.example.ajedrez.View.MainActivity;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
@@ -18,8 +19,9 @@ import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.shockwave.pdfium.PdfDocument;
 
 import java.util.List;
+import java.util.Objects;
 
-public class SubjectReaderFragment extends Fragment implements OnPageChangeListener, OnLoadCompleteListener {
+public class SubjectReaderFragment extends BaseFragment implements OnPageChangeListener, OnLoadCompleteListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     public String fileName = "";
     PDFView pdfView;
@@ -43,6 +45,12 @@ public class SubjectReaderFragment extends Fragment implements OnPageChangeListe
         pdfView = view.findViewById(R.id.pdfView);
         displayFromAsset(fileName);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
     }
 
     private void displayFromAsset(String assetFileName) {

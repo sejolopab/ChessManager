@@ -1,5 +1,6 @@
 package com.example.ajedrez.View.Students;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.support.design.widget.FloatingActionButton;
@@ -12,11 +13,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.GenericMethodsManager;
 import com.example.ajedrez.Utils.PreferenceFilters;
+import com.example.ajedrez.Utils.Utils;
+import com.example.ajedrez.View.BaseFragment;
 import com.example.ajedrez.View.MainActivity;
 
 import com.google.firebase.FirebaseApp;
@@ -29,8 +33,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class StudentsListFragment extends Fragment {
+public class StudentsListFragment extends BaseFragment {
 
     private StudentsListener mListener;
     private RecyclerView recyclerView;
@@ -81,9 +86,31 @@ public class StudentsListFragment extends Fragment {
             }
         });
 
+        searchText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                Utils.Companion.hideKeyboard(v, getContext());
+            }
+        });
+
         FloatingActionButton add = view.findViewById(R.id.addStudent);
         add.setOnClickListener(v -> mListener.showAddStudentScreen());
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        studentsList = new ArrayList<>();
+        adapter = new StudentsListAdapter(studentsList, mListener);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
+        loadStudents();
     }
 
     public void loadStudents() {
@@ -108,16 +135,6 @@ public class StudentsListFragment extends Fragment {
 
             }
         });
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        studentsList = new ArrayList<>();
-        adapter = new StudentsListAdapter(studentsList, mListener);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
-        loadStudents();
     }
 
     public interface StudentsListener {

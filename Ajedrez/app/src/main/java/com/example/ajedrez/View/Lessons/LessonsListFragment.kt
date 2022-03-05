@@ -10,11 +10,12 @@ import android.view.ViewGroup
 import com.example.ajedrez.Model.Assistance
 import com.example.ajedrez.Model.Lesson
 import com.example.ajedrez.R
+import com.example.ajedrez.View.BaseFragment
 import com.example.ajedrez.View.MainActivity
 import com.google.firebase.database.*
 import java.util.*
 
-class LessonsListFragment : Fragment() {
+class LessonsListFragment : BaseFragment() {
     private var mListener: LessonsListener? = null
     private var recyclerView: RecyclerView? = null
     private var adapter: LessonsListAdapter? = null
@@ -37,6 +38,15 @@ class LessonsListFragment : Fragment() {
         recyclerView!!.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView!!.adapter = adapter
         loadAssistance()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        BaseFragment.hideKeyboardFrom(
+            Objects.requireNonNull(context), Objects.requireNonNull(
+                view
+            )
+        )
     }
 
     private fun loadAssistance() {
