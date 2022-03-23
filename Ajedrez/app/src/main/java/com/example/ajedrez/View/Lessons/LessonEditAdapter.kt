@@ -28,7 +28,7 @@ class LessonEditAdapter internal constructor(private var mStudents: List<Student
     }
 
     fun setStudentsList(studentList: List<Assistance>) {
-        //mStudents = studentList
+        //Jeank Feo
     }
 
     inner class LessonEditViewHolder internal constructor(val mView: View) : RecyclerView.ViewHolder(mView) {
