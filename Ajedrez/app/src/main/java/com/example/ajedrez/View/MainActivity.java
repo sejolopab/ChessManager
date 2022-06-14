@@ -21,13 +21,13 @@ import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.DownloadManager;
 import com.example.ajedrez.Utils.GenericMethodsManager;
 import com.example.ajedrez.View.Assistance.StudentsAssistListFragment;
-import com.example.ajedrez.View.Assistance.StudentsAssistListFragment.StudentsAssistanceListener;
+import com.example.ajedrez.View.Assistance.StudentsAssistanceListener;
 import com.example.ajedrez.View.Lessons.LessonInfoFragment;
 import com.example.ajedrez.View.Lessons.LessonsListFragment;
 import com.example.ajedrez.View.Students.InfoStudentFragment;
 import com.example.ajedrez.View.Students.NewStudentFragment;
 import com.example.ajedrez.View.Students.StudentsListFragment;
-import com.example.ajedrez.View.Students.StudentsListFragment.StudentsListener;
+import com.example.ajedrez.View.Students.StudentsListener;
 import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener;
 import com.example.ajedrez.View.Subjects.SubjectReaderFragment;
 import com.example.ajedrez.View.Subjects.SubjectsListFragment;
@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -223,11 +221,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onStudentCreated() {
-        showStudentsFragment();
-    }
-
-    @Override
-    public void onAssistanceListSaved() {
         showStudentsFragment();
     }
 

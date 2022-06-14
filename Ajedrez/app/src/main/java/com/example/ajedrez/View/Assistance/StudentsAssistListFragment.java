@@ -16,12 +16,16 @@ import android.widget.LinearLayout;
 
 import com.example.ajedrez.Model.Assistance;
 import com.example.ajedrez.Model.Student;
+import com.example.ajedrez.Network.Network;
+import com.example.ajedrez.Network.Observer;
 import com.example.ajedrez.R;
+import com.example.ajedrez.Utils.AlertsManager;
 import com.example.ajedrez.Utils.GenericMethodsManager;
 import com.example.ajedrez.Utils.PreferenceFilters;
 import com.example.ajedrez.Utils.Utils;
 import com.example.ajedrez.View.BaseFragment;
 import com.example.ajedrez.View.MainActivity;
+import com.github.barteksc.pdfviewer.util.Util;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,26 +37,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StudentsAssistListFragment extends BaseFragment {
+public class StudentsAssistListFragment extends BaseFragment implements Observer {
+
+    //==============================================================================================
+    // View objects
+    //==============================================================================================
 
     private StudentsAssistanceListener mListener;
     private AssistanceListAdapter adapter;
     private RecyclerView recyclerView;
     private List<Assistance> assistanceList;
-    private final String todayDate = GenericMethodsManager.getInstance().getServerDateFormat();
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference assistanceRef = database.getReference("assistance");
-    DatabaseReference studentsRef = database.getReference("students");
-    List<Student> studentList = new ArrayList<>();
+    //==============================================================================================
+    // Properties
+    //==============================================================================================
 
     public void setListener(MainActivity activity) {
-        this.mListener = activity;
+        mListener = activity;
     }
 
     public static StudentsAssistListFragment newInstance() {
         return new StudentsAssistListFragment();
     }
+
+    //==============================================================================================
+    // Lifecycle
+    //==============================================================================================
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -61,7 +71,7 @@ public class StudentsAssistListFragment extends BaseFragment {
         recyclerView = view.findViewById(R.id.studentsAssistanceList);
         FloatingActionButton saveAssistance = view.findViewById(R.id.saveAssistance);
         saveAssistance.setOnClickListener(v -> saveAssistance());
-        assistanceList = new ArrayList<>();
+        assistanceList = Network.getInstance().getAssistance();
         return view;
     }
 
@@ -71,6 +81,39 @@ public class StudentsAssistListFragment extends BaseFragment {
         adapter = new AssistanceListAdapter(assistanceList, mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+        setupEventListeners(view);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Network.getInstance().attachStudentObserver(this);
+        Network.getInstance().attachAssistanceObserver(this);
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Network.getInstance().detachStudentObserver(this);
+        Network.getInstance().detachAssistanceObserver(this);
+    }
+
+    //==============================================================================================
+    // Methods
+    //==============================================================================================
+
+    private void setupEventListeners(@NonNull View view) {
+        LinearLayout contentLayout = view.findViewById(R.id.contentLayout);
+        contentLayout.setOnClickListener(v -> {
+            hideKeyboardFrom(Objects.requireNonNull(getContext()), view);
+        });
+
+        setupSearchBar(view);
+        setupSwipeListener();
+    }
+
+    private void setupSearchBar(@NonNull View view) {
         AppCompatEditText searchText = view.findViewById(R.id.searchText);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -98,29 +141,40 @@ public class StudentsAssistListFragment extends BaseFragment {
                 Utils.Companion.hideKeyboard(v, Objects.requireNonNull(getContext()));
             }
         });
-
-        setupSwipeListener();
-        loadAssistance();
-
-        LinearLayout contentLayout = view.findViewById(R.id.contentLayout);
-        contentLayout.setOnClickListener(v -> {
-            hideKeyboardFrom(Objects.requireNonNull(getContext()), view);
-        });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
+    private void setupSwipeListener() {
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder,
+                                 int swipeDir) {
+                AssistanceListAdapter.AssistanceViewHolder vHolder = (AssistanceListAdapter.AssistanceViewHolder) viewHolder;
+                Assistance tStudent = vHolder.getItem();
+                for (Assistance assistance: assistanceList) {
+                    if (assistance.getStudent().getName().equals(tStudent.getStudent().getName())) {
+                        tStudent.setAssisted(swipeDir == 4);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     public List<Assistance> filter(String text) {
         List<Assistance> filteredList = new ArrayList<>();
 
         for (Assistance item : assistanceList) {
-
             Student student = item.getStudent();
-            if (student == null) { continue; }
 
             if (student.getName() != null) {
                 if (student.getName().toLowerCase().contains(text.toLowerCase())) {
@@ -146,64 +200,35 @@ public class StudentsAssistListFragment extends BaseFragment {
         return filteredList;
     }
 
-    public List<Assistance> filterActiveStudents() {
-        List<Assistance> filteredList = new ArrayList<>();
-
-        for (Assistance item : assistanceList) {
-            Student student = item.getStudent();
-            if (student != null || student.getActive()) {
-                filteredList.add(item);
-            }
-        }
-
-        return filteredList;
-    }
-
-    private void loadAssistance() {
-
-        loadStudents();
-
-        Query studentsQuery = assistanceRef.child(todayDate);
-        studentsQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                assistanceList = new ArrayList<>();
-                for(DataSnapshot student :dataSnapshot.getChildren()){
-                    Assistance value = student.getValue(Assistance.class);
-                    assistanceList.add(value);
-                }
-                if (assistanceList.size() > 0) {
-                    if (assistanceList.size() < studentList.size()) {
-                        Student tempStudent = null;
-                        for (Student student : studentList) {
-                            for (Assistance assistance : assistanceList) {
-                                if (student.getId().equals(assistance.getStudent().getId())) {
-                                    tempStudent = student;
-                                    break;
-                                }
-                            }
-                            if (tempStudent == null) {
-                                assistanceList.add(new Assistance(student));
-                                saveAssistance();
-                            }
+    private void updateAssistanceList() {
+        if (assistanceList.size() > 0) {
+            assistanceList = Network.getInstance().getAssistance();
+            loadAssistanceList();
+            if (assistanceList.size() < Network.getInstance().getStudentList().size()) {
+                Student tempStudent = null;
+                for (Student student : Network.getInstance().getStudentList()) {
+                    for (Assistance assistance : assistanceList) {
+                        if (student.getId().equals(assistance.getStudent().getId())) {
+                            tempStudent = student;
+                            break;
                         }
-                        loadAssistanceList();
-                    } else {
-                        loadAssistanceList();
                     }
-                } else {
-                    for (Student student : studentList) {
+                    if (tempStudent == null) {
                         assistanceList.add(new Assistance(student));
+                        saveAssistance();
                     }
-                    loadAssistanceList();
                 }
+                loadAssistanceList();
+            } else {
+                assistanceList = Network.getInstance().getAssistance();
+                loadAssistanceList();
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+        } else {
+            for (Student student : Network.getInstance().getStudentList()) {
+                assistanceList.add(new Assistance(student));
             }
-        });
+            loadAssistanceList();
+        }
     }
 
     private void loadAssistanceList(){
@@ -212,82 +237,24 @@ public class StudentsAssistListFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
     }
 
-    private void loadStudents() {
-        studentsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                assistanceList = new ArrayList<>();
-                for(DataSnapshot data :dataSnapshot.getChildren()){
-                    Student newStudent = data.getValue(Student.class);
-                    if (newStudent == null || !newStudent.getActive())
-                        continue;
-                    newStudent.setId(data.getKey());
-                    //assistanceList.add(new Assistance(newStudent));
-                    studentList.add(newStudent);
-                }
-                //assistanceList = PreferenceFilters.getInstance().applyPreferenceFilters(assistanceList, getContext());
-                //adapter.setAssistanceList(assistanceList);
-                //adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void setupSwipeListener() {
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView,
-                                  @NonNull RecyclerView.ViewHolder viewHolder,
-                                  @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder,
-                                 int swipeDir) {
-                AssistanceListAdapter.AssistanceViewHolder vHolder = (AssistanceListAdapter.AssistanceViewHolder) viewHolder;
-                Assistance tStudent = vHolder.getItem();
-                for (Assistance assistance: assistanceList) {
-                    if (assistance.getStudent().getName().equals(tStudent.getStudent().getName())) {
-                        //assistanceList.remove(assistance);
-                        //assistanceList.add(tStudent);
-
-                        if (swipeDir == 4) {
-                            tStudent.setAssisted(true);
-                        } else {
-                            tStudent.setAssisted(false);
-                        }
-
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        });
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
-
     private void saveAssistance() {
-        assistanceRef.child(todayDate).setValue(assistanceList);
-        for (Assistance studentAssistance : assistanceList) {
-            if (studentAssistance.getAssisted() != null) {
-                if (studentAssistance.getAssisted()) {
-                    Objects.requireNonNull(studentAssistance.getStudent()).setLastClass(todayDate);
-                    studentsRef.child(Objects.requireNonNull(studentAssistance.getStudent().getId()))
-                            .setValue(studentAssistance.getStudent());
-                }
-            }
-        }
-        mListener.onAssistanceListSaved();
+        Network.getInstance().saveAssistance(assistanceList,
+                //onComplete
+                () -> AlertsManager.getInstance().showAlertDialog(null,
+                        "Asistencia se guardo con exito",
+                        getContext()),
+                //onError
+                () -> AlertsManager.getInstance().showAlertDialog("Error",
+                        "Error al guardar los datos",
+                        getContext()));
     }
 
-    public interface StudentsAssistanceListener {
-        void onAssistanceListSaved();
-        void onAssistanceItemClick();
+    //==============================================================================================
+    // StudentNotifications / AssistanceNotification
+    //==============================================================================================
+
+    @Override
+    public void update() {
+        updateAssistanceList();
     }
 }

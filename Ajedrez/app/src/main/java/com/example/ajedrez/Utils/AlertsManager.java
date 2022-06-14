@@ -28,7 +28,9 @@ public class AlertsManager {
      */
     public void showAlertDialog(final String title, final String message, Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(title);
+        if (title != null) {
+            builder.setTitle(title);
+        }
         builder.setMessage(message);
         builder.setPositiveButton("OK", (dialog, id) -> {});
         AlertDialog alert = builder.create();
@@ -44,7 +46,9 @@ public class AlertsManager {
      */
     public void showAlertDialogWithAction(final String title, final String message, Context context, Runnable function) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(title);
+        if (title != null) {
+            builder.setTitle(title);
+        }
         builder.setMessage(message);
         builder.setPositiveButton("OK", (dialog, id) -> function.run());
         AlertDialog alert = builder.create();

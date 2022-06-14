@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ajedrez.Model.Student;
+import com.example.ajedrez.Network.Network;
+import com.example.ajedrez.Network.Observer;
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.GenericMethodsManager;
 import com.example.ajedrez.Utils.PreferenceFilters;
@@ -27,17 +29,27 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StudentsListFragment extends BaseFragment {
+public class StudentsListFragment extends BaseFragment implements Observer {
+
+    //==============================================================================================
+    // View objects
+    //==============================================================================================
 
     private StudentsListener mListener;
     private RecyclerView recyclerView;
     private StudentsListAdapter adapter;
-    private List<Student> studentsList;
     private AppCompatEditText searchText;
+
+    //==============================================================================================
+    // Properties
+    //==============================================================================================
+
+    private List<Student> studentsList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -54,6 +66,10 @@ public class StudentsListFragment extends BaseFragment {
         return new StudentsListFragment();
     }
 
+    //==============================================================================================
+    // Lifecycle
+    //==============================================================================================
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +78,40 @@ public class StudentsListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FirebaseApp.initializeApp(getContext());
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
         recyclerView = view.findViewById(R.id.studentsList);
+        setupEventListeners(view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        studentsList = Network.getInstance().getStudentList();
+        adapter = new StudentsListAdapter(studentsList, mListener);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
+        loadStudents();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
+        Network.getInstance().attachStudentObserver(this);
+    }
+
+    //==============================================================================================
+    // Methods
+    //==============================================================================================
+
+    public void setupEventListeners(@NonNull View view) {
+        FloatingActionButton add = view.findViewById(R.id.addStudent);
+        add.setOnClickListener(v -> mListener.showAddStudentScreen());
+        setupSearchBar(view);
+    }
+
+    public void setupSearchBar(@NonNull View view) {
         searchText = view.findViewById(R.id.searchText);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -92,54 +139,20 @@ public class StudentsListFragment extends BaseFragment {
                 Utils.Companion.hideKeyboard(v, getContext());
             }
         });
-
-        FloatingActionButton add = view.findViewById(R.id.addStudent);
-        add.setOnClickListener(v -> mListener.showAddStudentScreen());
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        hideKeyboardFrom(Objects.requireNonNull(getContext()), Objects.requireNonNull(getView()));
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        studentsList = new ArrayList<>();
-        adapter = new StudentsListAdapter(studentsList, mListener);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
-        loadStudents();
     }
 
     public void loadStudents() {
-        Query studentsQuery = FirebaseDatabase.getInstance().getReference().child("students");
-        studentsQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                studentsList = new ArrayList<>();
-                for(DataSnapshot data :dataSnapshot.getChildren()){
-                    Student newStudent = data.getValue(Student.class);
-                    newStudent.setId(data.getKey());
-                    studentsList.add(newStudent);
-                }
-
-                studentsList = PreferenceFilters.getInstance().applyPreferenceFilters(studentsList, getContext());
-                adapter.setStudentsList(studentsList);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        adapter.setStudentsList(studentsList);
+        adapter.notifyDataSetChanged();
     }
 
-    public interface StudentsListener {
-        void showAddStudentScreen();
-        void showStudentInfoScreen(Student student);
+    //==============================================================================================
+    // StudentNotification
+    //==============================================================================================
+
+    @Override
+    public void update() {
+        studentsList = Network.getInstance().getStudentList();
+        loadStudents();
     }
 }

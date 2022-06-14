@@ -18,6 +18,12 @@ public class DownloadManager {
         return instance;
     }
 
+    /**
+     * Download a selected file from firebase and saves it on the download directory
+     *
+     * @param context - Application context at the moment
+     * @param fileName -  Name of the file to download
+     */
     public void download(Context context, String fileName) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
