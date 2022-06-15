@@ -24,7 +24,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".View.Lessons.LessonsListFragment"
+        tools:context=".view.lessons.LessonsListFragment"
         tools:listitem="@layout/fragment_lessons_item" />
 
 </LinearLayout>

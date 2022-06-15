@@ -16,11 +16,4 @@
         android:defaultValue="0"
         android:entries="@array/cat_nac"
         android:entryValues="@array/cat_nac_values" />
-    <ListPreference
-        android:title="Categorias de estudiantiles"
-        android:summary="Elegir para mostrar solamente una categoria de las usadas en los juegos estudiantiles"
-        android:key="catEstPref"
-        android:defaultValue="0"
-        android:entries="@array/cat_est"
-        android:entryValues="@array/cat_est_values" />
 </PreferenceScreen>

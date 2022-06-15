@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="cat_est">
-        <item>Categoria A</item>
-        <item>Categoria B</item>
-        <item>Categoria C</item>
-        <item>Categoria D</item>
-        <item>Ninguna</item>
-    </string-array>
-
     <string-array name="cat_est_values">
         <item>1</item>
         <item>2</item>

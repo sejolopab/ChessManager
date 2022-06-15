@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".View.Students.NewStudentFragment"
+    tools:context=".view.students.NewStudentFragment"
     android:padding="@dimen/mid_dimen">
 
     <androidx.core.widget.NestedScrollView

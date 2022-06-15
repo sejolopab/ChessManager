@@ -12,21 +12,23 @@
     <string name="yes_button">Yes</string>
     <string name="no_button">No</string>
     <string name="subjects_title">Temas</string>
-    <string name="error_title">Error</string>
-    <string name="error_name_required">El nombre es requerido para guardar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="first_lesson_date">Fecha de ingreso</string>
     <string name="school">Escuela</string>
     <string name="birth_date">Fecha de Nacimiento</string>
-    <string name="phone_number">Telefono</string>
+    <string name="phone_number">Teléfono</string>
     <string name="name">Nombre</string>
-    <string name="last_class">Ultima clase asistida</string>
-    <string name="file_not_found">File not found</string>
+    <string name="last_class">Última clase asistida</string>
     <string name="search">Buscar</string>
     <string name="activo">Activo</string>
     <string name="fecha">Fecha</string>
     <string name="grupo">Grupo</string>
     <string name="eliminar">Eliminar</string>
     <string name="save_button">Save button</string>
+
+    <!-- Popup messages -->
+    <string name="error_title">Error</string>
+    <string name="error_name_required">El nombre es requerido</string>
+    <string name="error_unsuccessful">Error al actualizar los datos</string>
+    <string name="successful">Guardado con éxito</string>
+    <string name="file_not_found">File not found</string>
 </resources>
