@@ -144,8 +144,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/eliminar"
                 android:drawableStart="@drawable/ic_delete"
-                android:drawableTint="@color/colorRed"
-                android:textColor="@color/colorRed"
+                android:drawableTint="@color/lightRed"
+                android:textColor="@color/lightRed"
                 android:background="@android:color/transparent"
                 android:layout_marginStart="4dp"/>
         </LinearLayout>
