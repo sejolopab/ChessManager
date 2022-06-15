@@ -28,6 +28,26 @@
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/menu/activity_main_drawer.xml" value="0.2390625" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/menu/main.xml" value="0.2390625" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/xml/pref_screen.xml" value="0.20520833333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_assistance_item.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_assistance_list.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_lesson_edit.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_lesson_info.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_lesson_info_item.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_lessons_item.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_lessons_list.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_student_info.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_student_item.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_student_list.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_student_new.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_subject_reader.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_subjects_item.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/fragment_subjects_list.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.1480978260869565" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.18385416666666668" />
+        <entry key="app/src/main/res/menu/main.xml" value="0.18385416666666668" />
       </map>
     </option>
   </component>

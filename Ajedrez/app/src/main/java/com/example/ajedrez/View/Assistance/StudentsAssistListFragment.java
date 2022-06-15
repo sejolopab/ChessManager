@@ -1,12 +1,6 @@
 package com.example.ajedrez.View.Assistance;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,24 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.ajedrez.Model.Assistance;
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.Network.Network;
 import com.example.ajedrez.Network.Observer;
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.AlertsManager;
-import com.example.ajedrez.Utils.GenericMethodsManager;
 import com.example.ajedrez.Utils.PreferenceFilters;
 import com.example.ajedrez.Utils.Utils;
 import com.example.ajedrez.View.BaseFragment;
 import com.example.ajedrez.View.MainActivity;
-import com.github.barteksc.pdfviewer.util.Util;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;

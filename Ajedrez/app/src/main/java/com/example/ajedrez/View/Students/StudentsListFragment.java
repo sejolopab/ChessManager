@@ -1,16 +1,16 @@
 package com.example.ajedrez.View.Students;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ajedrez.Model.Student;
 import com.example.ajedrez.Network.Network;
@@ -21,16 +21,8 @@ import com.example.ajedrez.Utils.PreferenceFilters;
 import com.example.ajedrez.Utils.Utils;
 import com.example.ajedrez.View.BaseFragment;
 import com.example.ajedrez.View.MainActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.io.ObjectStreamException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

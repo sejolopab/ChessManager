@@ -1,13 +1,11 @@
 package com.example.ajedrez.Network;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-
+import androidx.annotation.NonNull;
 import com.example.ajedrez.Model.Assistance;
+import com.example.ajedrez.Model.Lesson;
 import com.example.ajedrez.Model.Student;
-import com.example.ajedrez.Utils.AlertsManager;
 import com.example.ajedrez.Utils.GenericMethodsManager;
-import com.example.ajedrez.Utils.Utils;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Network implements StudentNotifications, AssistanceNotifications {
+public class Network implements StudentNotifications, AssistanceNotifications, LessonsNotifications {
 
     //==============================================================================================
     // Properties
@@ -28,10 +26,11 @@ public class Network implements StudentNotifications, AssistanceNotifications {
     private static Network instance = new Network();
     private static final List<Student> studentList = new ArrayList<>();
     private static List<Assistance> assistanceList = new ArrayList<>();
+    private static List<Lesson> lessonsList = new ArrayList<>();
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private final DatabaseReference assistanceRef = database.getReference("assistance");
     private final DatabaseReference studentsRef = database.getReference("students");
-
+    private final DatabaseReference lessonsRef = database.getReference().child("assistance");
     private final String todayDate = GenericMethodsManager.getInstance().getServerDateFormat();
 
     //==============================================================================================
@@ -41,6 +40,7 @@ public class Network implements StudentNotifications, AssistanceNotifications {
     public Network() {
         loadAssistance();
         loadStudents();
+        loadLessons();
     }
 
     public static Network getInstance() {
@@ -95,6 +95,32 @@ public class Network implements StudentNotifications, AssistanceNotifications {
         });
     }
 
+    private void loadLessons() {
+        lessonsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                lessonsList.clear();
+                for(DataSnapshot lessonListData :snapshot.getChildren()){
+                    String date = lessonListData.getKey();
+                    List<Assistance> assistance = new ArrayList<>();
+                    for (DataSnapshot student : lessonListData.getChildren()) {
+                        Assistance value = student.getValue(Assistance.class);
+                        assistance.add(value);
+                    }
+                    if (date != null) {
+                        lessonsList.add(new Lesson(date, assistance));
+                    }
+                }
+                notifyUpdateStudentObservers();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     public void saveAssistance(List<Assistance> newAssistance, Runnable onComplete, Runnable onError) {
         assistanceRef.child(todayDate).setValue(newAssistance, (databaseError, databaseReference) -> {
             if (databaseError != null) {
@@ -126,6 +152,10 @@ public class Network implements StudentNotifications, AssistanceNotifications {
 
     public List<Assistance> getAssistance() {
         return assistanceList;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessonsList;
     }
 
     //==============================================================================================
@@ -170,6 +200,29 @@ public class Network implements StudentNotifications, AssistanceNotifications {
     @Override
     public void notifyUpdateAssistanceObservers() {
         for(Observer o: assistanceObservers) {
+            o.update();
+        }
+    }
+
+    //==============================================================================================
+    // LessonsNotifications
+    //==============================================================================================
+
+    private final List<Observer> lessonsObservers = new ArrayList<>();
+
+    @Override
+    public void attachLessonsObserver(Observer o) {
+        lessonsObservers.add(o);
+    }
+
+    @Override
+    public void detachLessonsObserver(Observer o) {
+        lessonsObservers.remove(o);
+    }
+
+    @Override
+    public void notifyUpdateLessonsObservers() {
+        for(Observer o: lessonsObservers) {
             o.update();
         }
     }

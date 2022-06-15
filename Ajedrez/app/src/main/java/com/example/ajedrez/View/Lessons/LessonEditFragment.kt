@@ -1,10 +1,10 @@
 package com.example.ajedrez.View.Lessons
 
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ajedrez.Model.Assistance
 import com.example.ajedrez.Model.Lesson
 import com.example.ajedrez.R
@@ -47,33 +47,10 @@ class LessonEditFragment  : BaseFragment() {
         )
     }
 
-    private fun loadAssistance() {
-        val studentsQuery: Query = FirebaseDatabase.getInstance().reference.child("assistance")
-        studentsQuery.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val lessonsList: MutableList<Lesson> = ArrayList()
-                for (assistanceList in dataSnapshot.children) {
-                    val date = assistanceList.key
-                    val assistants: MutableList<Assistance> = ArrayList()
-                    for (student in assistanceList.children) {
-                        val value = student.getValue(Assistance::class.java)!!
-                        assistants.add(value)
-                    }
-                    lessonsList.add(Lesson(date!!, assistants))
-                }
-                //adapter!!.setLessonsList(lessonsList)
-                //adapter!!.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
     interface EditLessonListener {
     }
 
     companion object {
-        @JvmStatic
         fun newInstance(): LessonsListFragment {
             return LessonsListFragment()
         }

@@ -2,18 +2,18 @@ package com.example.ajedrez.View;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.example.ajedrez.Model.Lesson;
 import com.example.ajedrez.Model.Student;
@@ -28,7 +28,7 @@ import com.example.ajedrez.View.Students.InfoStudentFragment;
 import com.example.ajedrez.View.Students.NewStudentFragment;
 import com.example.ajedrez.View.Students.StudentsListFragment;
 import com.example.ajedrez.View.Students.StudentsListener;
-import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener;
+import com.example.ajedrez.View.Lessons.LessonsListener;
 import com.example.ajedrez.View.Subjects.SubjectReaderFragment;
 import com.example.ajedrez.View.Subjects.SubjectsListFragment;
 import com.example.ajedrez.View.Subjects.SubjectsListFragment.SubjectsListener;
@@ -36,6 +36,7 @@ import com.example.ajedrez.View.Students.NewStudentFragment.NewStudentListener;
 import com.example.ajedrez.View.Students.InfoStudentFragment.StudentInfoListener;
 import com.example.ajedrez.View.Lessons.LessonInfoFragment.LessonInfoListener;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 
 public class MainActivity extends AppCompatActivity
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .addToBackStack(null)
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
-                .replace(R.id.content_container, LessonsListFragment.newInstance())
+                .replace(R.id.content_container, LessonsListFragment.Companion.newInstance())
                 .commitAllowingStateLoss();
     }
 
@@ -215,7 +216,7 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .addToBackStack(null)
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
-                .replace(R.id.content_container, LessonInfoFragment.newInstance(lesson))
+                .replace(R.id.content_container, LessonInfoFragment.Companion.newInstance(lesson))
                 .commitAllowingStateLoss();
     }
 

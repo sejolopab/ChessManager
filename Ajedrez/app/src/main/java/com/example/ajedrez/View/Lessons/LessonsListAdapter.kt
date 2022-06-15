@@ -1,13 +1,13 @@
 package com.example.ajedrez.View.Lessons
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ajedrez.Model.Lesson
 import com.example.ajedrez.R
-import com.example.ajedrez.View.Lessons.LessonsListFragment.LessonsListener
+import com.example.ajedrez.View.Lessons.LessonsListener
 
 class LessonsListAdapter internal constructor(private var mLessonsList: List<Lesson>,
                                               private val mListener: LessonsListener?) : RecyclerView.Adapter<LessonsListAdapter.ViewHolder>() {

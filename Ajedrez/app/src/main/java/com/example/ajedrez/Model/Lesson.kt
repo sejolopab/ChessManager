@@ -1,9 +1,9 @@
 package com.example.ajedrez.Model
 
 import java.io.Serializable
+import java.util.*
 
 class Lesson(val date: String, val assistance: List<Assistance>): Serializable {
-
     val numberOfAssists: Int
         get() {
             var assists = 0

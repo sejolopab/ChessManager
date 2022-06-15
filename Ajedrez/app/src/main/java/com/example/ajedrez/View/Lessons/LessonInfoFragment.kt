@@ -1,18 +1,17 @@
 package com.example.ajedrez.View.Lessons
 
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ajedrez.Model.Lesson
 
 import com.example.ajedrez.R
 import com.example.ajedrez.View.BaseFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
-import kotlin.collections.ArrayList
 
 class LessonInfoFragment : BaseFragment() {
     private val lessonKey = "lesson"
@@ -59,10 +58,10 @@ class LessonInfoFragment : BaseFragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(pLesson: Lesson) =
-                LessonInfoFragment().apply {
-                    lesson = pLesson
-                }
+        fun newInstance(pLesson: Lesson): LessonInfoFragment {
+            val nFragment = LessonInfoFragment()
+            nFragment.lesson = pLesson
+            return nFragment
+        }
     }
 }

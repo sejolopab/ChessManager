@@ -1,11 +1,12 @@
 package com.example.ajedrez.View.Subjects;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 
 import com.example.ajedrez.R;
 import com.example.ajedrez.Utils.AlertsManager;

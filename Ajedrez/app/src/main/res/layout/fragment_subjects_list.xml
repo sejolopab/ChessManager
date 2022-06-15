@@ -16,7 +16,7 @@
         style="@style/TextAppearance.MaterialComponents.Headline4">
     </TextView>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subjectsList"
         android:name="com.example.ajedrez.View.Subjects.SubjectsListFragment"
         android:layout_width="match_parent"
