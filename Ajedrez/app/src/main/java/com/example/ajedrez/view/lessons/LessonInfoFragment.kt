@@ -17,7 +17,7 @@ import java.util.*
 
 class LessonInfoFragment : BaseFragment() {
     private val lessonKey = "lesson"
-    private var lesson: Lesson = Lesson("", ArrayList())
+    private var lesson: Lesson = Lesson(0, ArrayList())
     private var mListener: LessonInfoListener? = null
     private var recyclerView: RecyclerView? = null
     private var adapter: LessonInfoAdapter? = null

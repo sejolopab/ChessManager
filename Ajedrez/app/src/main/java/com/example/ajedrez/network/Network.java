@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Network implements StudentNotifications, AssistanceNotifications, LessonsNotifications {
@@ -59,9 +60,9 @@ public class Network implements StudentNotifications, AssistanceNotifications, L
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 assistanceList.clear();
-                for(DataSnapshot student :dataSnapshot.getChildren()){
-                    Assistance value = student.getValue(Assistance.class);
-                    assistanceList.add(value);
+                Lesson value = dataSnapshot.getValue(Lesson.class);
+                if (value != null) {
+                    assistanceList = value.getAssistance();
                 }
                 notifyUpdateAssistanceObservers();
             }
@@ -95,20 +96,13 @@ public class Network implements StudentNotifications, AssistanceNotifications, L
     }
 
     private void loadLessons() {
-        lessonsRef.addValueEventListener(new ValueEventListener() {
+        lessonsRef.orderByChild("date").limitToLast(20).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 lessonsList.clear();
-                for(DataSnapshot lessonListData :snapshot.getChildren()){
-                    String date = lessonListData.getKey();
-                    List<Assistance> assistance = new ArrayList<>();
-                    for (DataSnapshot student : lessonListData.getChildren()) {
-                        Assistance value = student.getValue(Assistance.class);
-                        assistance.add(value);
-                    }
-                    if (date != null) {
-                        lessonsList.add(new Lesson(date, assistance));
-                    }
+                for(DataSnapshot lesson :snapshot.getChildren()){
+                    Lesson value = lesson.getValue(Lesson.class);
+                    lessonsList.add(0, value);
                 }
                 notifyUpdateStudentObservers();
             }
@@ -121,7 +115,8 @@ public class Network implements StudentNotifications, AssistanceNotifications, L
     }
 
     public void saveAssistance(List<Assistance> newAssistance, Runnable onComplete, Runnable onError) {
-        assistanceRef.child(todayDate).setValue(newAssistance, (databaseError, databaseReference) -> {
+        Lesson lesson = new Lesson(Utils.Companion.getLongTimeStamp(), newAssistance);
+        assistanceRef.child(todayDate).setValue(lesson, (databaseError, databaseReference) -> {
             if (databaseError != null) {
                 onError.run();
             } else {

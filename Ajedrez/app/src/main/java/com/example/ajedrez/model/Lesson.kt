@@ -2,8 +2,21 @@ package com.example.ajedrez.model
 
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.ArrayList
 
-class Lesson(val date: String, val assistance: List<Assistance>): Serializable {
+class Lesson: Serializable {
+
+    var date: Long = 0
+    var assistance: List<Assistance> = ArrayList()
+
+    //DO NOT REMOVE
+    constructor() {}
+
+    constructor(date: Long, assistance: List<Assistance>) {
+        this.date = date
+        this.assistance =  assistance
+    }
+
     val numberOfAssists: Int
         get() {
             var assists = 0

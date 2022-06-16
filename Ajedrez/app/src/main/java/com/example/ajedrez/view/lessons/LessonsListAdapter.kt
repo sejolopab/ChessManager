@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ajedrez.model.Lesson
 import com.example.ajedrez.R
+import com.example.ajedrez.utils.Utils
 
 class LessonsListAdapter internal constructor(private var mLessonsList: List<Lesson>,
                                               private val mListener: LessonsListener?) : RecyclerView.Adapter<LessonsListAdapter.ViewHolder>() {
@@ -20,7 +21,7 @@ class LessonsListAdapter internal constructor(private var mLessonsList: List<Les
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val lesson = mLessonsList[position]
         holder.mItem = lesson
-        holder.mDate.text = lesson.date
+        holder.mDate.text = Utils.getStringTimeStamp(lesson.date)
         holder.mAttendance.text = lesson.numberOfAssists.toString()
         holder.mView.setOnClickListener {
             mListener?.showLessonInfoScreen(lesson)
