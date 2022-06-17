@@ -30,7 +30,7 @@ public class NetworkManager implements StudentNotifications, AssistanceNotificat
     private final DatabaseReference assistanceRef = database.getReference("assistance");
     public final DatabaseReference studentsRef = database.getReference("students");
     private final DatabaseReference lessonsRef = database.getReference().child("assistance");
-    private final String todayDate = GenericMethodsManager.getInstance().getServerDateFormat();
+    private final String todayDate = Utils.Companion.getServerDateFormat();
 
     //==============================================================================================
     // Constructors
@@ -68,7 +68,7 @@ public class NetworkManager implements StudentNotifications, AssistanceNotificat
                 assistanceList.clear();
                 Lesson value = dataSnapshot.getValue(Lesson.class);
                 if (value != null) {
-                    assistanceList = value.getAssistance();
+                    assistanceList = value.getAttendanceComplete();
                     notifyUpdateAssistanceObservers();
                 }
             }
@@ -122,7 +122,7 @@ public class NetworkManager implements StudentNotifications, AssistanceNotificat
     }
 
     public void updateAttendance(Lesson lesson, Long oldDate, Runnable onComplete, Runnable onError) {
-        /*assistanceRef.child(String.valueOf(lesson.getDate())).setValue(lesson,
+        assistanceRef.child(lesson.getLessonId()).setValue(lesson,
                 (databaseError, databaseReference) -> {
             if (databaseError != null) {
                 onError.run();
@@ -133,7 +133,7 @@ public class NetworkManager implements StudentNotifications, AssistanceNotificat
 
         if (lesson.getDate() > oldDate) {
             //update students lastclass
-        }*/
+        }
     }
 
     public void saveTodayAttendance(Lesson newLesson, Runnable onComplete, Runnable onError) {
@@ -145,7 +145,7 @@ public class NetworkManager implements StudentNotifications, AssistanceNotificat
             }
         });
 
-        for (Assistance studentAssistance : newLesson.getStudents()) {
+        for (Assistance studentAssistance : newLesson.getAttendance()) {
             Student student = studentAssistance.getStudent();
             student.setLastAttendance(newLesson.getDate());
             studentsRef.child(student.getId()).setValue(student);

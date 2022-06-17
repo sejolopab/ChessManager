@@ -5,31 +5,33 @@ import kotlin.collections.ArrayList
 
 class Lesson: Serializable {
 
+    var lessonId: String = ""
     var date: Long = 0
-    var assistance: List<Assistance> = ArrayList()
+    var attendanceComplete: List<Assistance> = ArrayList()
 
     //DO NOT REMOVE
     constructor() {}
 
-    constructor(date: Long, assistance: List<Assistance>) {
+    constructor(id: String, date: Long, assistance: List<Assistance>) {
+        this.lessonId = id
         this.date = date
-        this.assistance =  assistance
+        this.attendanceComplete =  assistance
     }
 
     val numberOfAssists: Int
         get() {
             var assists = 0
-            for (student in assistance) {
+            for (student in attendanceComplete) {
                 if (student.assisted == null) continue
                 if (student.assisted!!) assists += 1
             }
             return assists
         }
 
-    val students: List<Assistance>
+    val attendance: List<Assistance>
         get() {
             val filteredList: MutableList<Assistance> = ArrayList()
-            for (student in assistance) {
+            for (student in attendanceComplete) {
                 if (student.assisted == null) continue
                 if (student.assisted == true) {
                     filteredList.add(student)

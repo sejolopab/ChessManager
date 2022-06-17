@@ -246,7 +246,9 @@ public class StudentsAssistListFragment extends BaseFragment implements Observer
     }
 
     private void saveAssistance() {
-        Lesson lesson = new Lesson(System.currentTimeMillis(),assistanceList);
+        Lesson lesson = new Lesson(Utils.Companion.getServerDateFormat(),
+                System.currentTimeMillis(),assistanceList);
+
         NetworkManager.getInstance().saveTodayAttendance(lesson,
                 //onComplete
                 () -> AlertsManager.getInstance().showAlertDialog(null,

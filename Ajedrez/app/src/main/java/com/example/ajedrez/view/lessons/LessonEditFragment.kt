@@ -1,5 +1,6 @@
 package com.example.ajedrez.view.lessons
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -55,7 +56,7 @@ class LessonEditFragment(private var lesson: Lesson, private var listener: Stude
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = AssistanceListAdapter(lesson.assistance, listener)
+        adapter = AssistanceListAdapter(lesson.attendanceComplete, listener)
         recyclerView!!.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView!!.adapter = adapter
@@ -88,13 +89,14 @@ class LessonEditFragment(private var lesson: Lesson, private var listener: Stude
         searchText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            @SuppressLint("NotifyDataSetChanged")
             override fun afterTextChanged(s: Editable) {
                 if (s.toString().isNotEmpty()) {
                     val filteredList = filter(s.toString())
                     adapter!!.setAssistanceList(filteredList)
                     adapter!!.notifyDataSetChanged()
                 } else {
-                    adapter!!.setAssistanceList(lesson.assistance)
+                    adapter!!.setAssistanceList(lesson.attendanceComplete)
                     adapter!!.notifyDataSetChanged()
                 }
             }
@@ -119,13 +121,14 @@ class LessonEditFragment(private var lesson: Lesson, private var listener: Stude
                 return false
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(
                 viewHolder: RecyclerView.ViewHolder,
                 swipeDir: Int
             ) {
                 val vHolder = viewHolder as AssistanceViewHolder
                 val tStudent = vHolder.item
-                for (assistance in lesson.assistance) {
+                for (assistance in lesson.attendanceComplete) {
                     if (assistance.student!!.name == tStudent.student!!.name) {
                         tStudent.assisted = swipeDir == 4
                         adapter!!.notifyDataSetChanged()
@@ -138,7 +141,7 @@ class LessonEditFragment(private var lesson: Lesson, private var listener: Stude
 
     fun filter(text: String): List<Assistance?> {
         val filteredList: MutableList<Assistance?> = ArrayList()
-        for (item in lesson.assistance) {
+        for (item in lesson.attendanceComplete) {
             val student = item.student
             if (student!!.name != null) {
                 if (student.name!!.lowercase().contains(text.lowercase())) {

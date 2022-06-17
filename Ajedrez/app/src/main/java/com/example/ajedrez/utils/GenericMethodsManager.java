@@ -28,13 +28,6 @@ public class GenericMethodsManager {
         return instance;
     }
 
-    public String getServerDateFormat() {
-        String stringFormat = "dd-MM-yyyy";
-        DateFormat dateFormat = new SimpleDateFormat(stringFormat);
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
-
     public String getSimpleDate() {
         String stringFormat = "dd/MM/yyyy";
         DateFormat dateFormat = new SimpleDateFormat(stringFormat);

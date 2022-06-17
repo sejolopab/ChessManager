@@ -44,8 +44,8 @@ class LessonInfoFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = LessonInfoAdapter(lesson.students)
-        adapter?.setStudentsList(lesson.students)
+        adapter = LessonInfoAdapter(lesson.attendance)
+        adapter?.setStudentsList(lesson.attendance)
 
         recyclerView!!.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView!!.adapter = adapter
