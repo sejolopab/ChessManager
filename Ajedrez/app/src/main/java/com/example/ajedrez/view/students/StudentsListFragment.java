@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ajedrez.model.Student;
-import com.example.ajedrez.network.Network;
+import com.example.ajedrez.network.NetworkManager;
 import com.example.ajedrez.network.Observer;
 import com.example.ajedrez.R;
 import com.example.ajedrez.utils.GenericMethodsManager;
@@ -74,7 +74,7 @@ public class StudentsListFragment extends BaseFragment implements Observer {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        studentsList = Network.getInstance().getStudentList();
+        studentsList = NetworkManager.getInstance().getStudentList();
         adapter = new StudentsListAdapter(studentsList, mListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
@@ -85,7 +85,7 @@ public class StudentsListFragment extends BaseFragment implements Observer {
     public void onResume() {
         super.onResume();
         hideKeyboardFrom(requireContext(), view);
-        Network.getInstance().attachStudentObserver(this);
+        NetworkManager.getInstance().attachStudentObserver(this);
     }
 
     @Override
@@ -149,7 +149,7 @@ public class StudentsListFragment extends BaseFragment implements Observer {
 
     @Override
     public void update() {
-        studentsList = Network.getInstance().getStudentList();
+        studentsList = NetworkManager.getInstance().getStudentList();
         loadStudents();
     }
 }

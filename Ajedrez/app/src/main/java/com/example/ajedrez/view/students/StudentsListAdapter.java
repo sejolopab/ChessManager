@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ajedrez.R;
 import com.example.ajedrez.model.Student;
+import com.example.ajedrez.utils.Utils;
 
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class StudentsListAdapter extends RecyclerView.Adapter<StudentsListAdapte
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.mItem = mStudentsList.get(position);
         holder.mName.setText(mStudentsList.get(position).getName());
-        holder.mLastClass.setText(mStudentsList.get(position).getLastClass());
+        Long date = mStudentsList.get(position).getLastAttendance();
+        holder.mLastClass.setText(Utils.Companion.getStringTimeStamp(date));
 
         holder.mView.setOnClickListener(v -> {
             if (null != mListener) {

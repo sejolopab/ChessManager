@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import com.firebase.client.ServerValue
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class Utils {
@@ -14,6 +16,11 @@ class Utils {
             val inputMethodManager = Objects.requireNonNull(context)
                 .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
+        fun getLongTimeStamp(date: String): Long {
+            val localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+            return localDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
         }
 
         fun getLongTimeStamp(): Long {

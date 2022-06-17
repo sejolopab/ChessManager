@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ajedrez.model.Assistance
 import com.example.ajedrez.R
 
-class LessonInfoAdapter internal constructor(private var mStudents: List<Assistance>,
-                                             private val mListener: LessonInfoFragment.LessonInfoListener?
+class LessonInfoAdapter internal constructor(
+    private var mStudents: List<Assistance>
 ) : RecyclerView.Adapter<LessonInfoAdapter.LessonInfoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonInfoViewHolder {
@@ -30,7 +30,7 @@ class LessonInfoAdapter internal constructor(private var mStudents: List<Assista
         mStudents = studentList
     }
 
-    inner class LessonInfoViewHolder internal constructor(val mView: View) : RecyclerView.ViewHolder(mView) {
+    inner class LessonInfoViewHolder internal constructor(mView: View) : RecyclerView.ViewHolder(mView) {
 
         val name: TextView = mView.findViewById(R.id.studentNameTextView)
 

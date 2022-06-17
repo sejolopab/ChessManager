@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ajedrez.model.Lesson
-import com.example.ajedrez.network.Network
+import com.example.ajedrez.network.NetworkManager
 import com.example.ajedrez.R
 import com.example.ajedrez.view.BaseFragment
 import java.util.*
@@ -32,7 +32,7 @@ class LessonsListFragment : BaseFragment(), Observer {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_lessons_list, container, false)
         recyclerView = view.findViewById(R.id.lessonsList)
-        lessonList = Network.getInstance().lessons
+        lessonList = NetworkManager.getInstance().lessons
         return view
     }
 
@@ -78,7 +78,7 @@ class LessonsListFragment : BaseFragment(), Observer {
     //==============================================================================================
 
     override fun update(p0: Observable?, p1: Any?) {
-        lessonList = Network.getInstance().lessons
+        lessonList = NetworkManager.getInstance().lessons
         loadAssistance()
     }
 }

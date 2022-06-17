@@ -9,7 +9,7 @@ class Student : Serializable {
     var phoneNumber: String? = null
     var birthDay: String? = null
     var startingDate: String? = null
-    var lastClass: String? = null
+    var lastAttendance: Long? = null
     var lessons: List<Lesson>? = null
     var active: Boolean = true
 }

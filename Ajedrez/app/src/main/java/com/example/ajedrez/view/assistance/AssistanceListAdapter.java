@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.ajedrez.model.Assistance;
 import com.example.ajedrez.R;
+import com.example.ajedrez.utils.Utils;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
     private List<Assistance> mAssistance;
     private final StudentsAssistanceListener mListener;
 
-    AssistanceListAdapter(List<Assistance> assistanceList, StudentsAssistanceListener listener) {
+    public AssistanceListAdapter(List<Assistance> assistanceList, StudentsAssistanceListener listener) {
         mAssistance = assistanceList;
         mListener = listener;
     }
@@ -35,7 +36,8 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
         Assistance studentAssistance = mAssistance.get(position);
         holder.mItem = studentAssistance;
         holder.mStudentName.setText(studentAssistance.getStudent().getName());
-        holder.mStudentSchool.setText(studentAssistance.getStudent().getLastClass());
+        String dateString = Utils.Companion.getStringTimeStamp(studentAssistance.getStudent().getLastAttendance());
+        holder.mStudentSchool.setText(dateString);
         holder.mView.setBackgroundResource(R.drawable.assistance_swipe_item);
         holder.mStudentName.setTextColor(Color.BLACK);
         holder.mStudentSchool.setTextColor(Color.BLACK);
@@ -62,7 +64,7 @@ public class AssistanceListAdapter extends RecyclerView.Adapter<AssistanceListAd
         return mAssistance.size();
     }
 
-    void setAssistanceList(List<Assistance> studentsList) {
+    public void setAssistanceList(List<Assistance> studentsList) {
         mAssistance = studentsList;
     }
 

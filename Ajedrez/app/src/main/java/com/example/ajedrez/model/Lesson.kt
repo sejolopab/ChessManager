@@ -1,7 +1,6 @@
 package com.example.ajedrez.model
 
 import java.io.Serializable
-import java.util.*
 import kotlin.collections.ArrayList
 
 class Lesson: Serializable {

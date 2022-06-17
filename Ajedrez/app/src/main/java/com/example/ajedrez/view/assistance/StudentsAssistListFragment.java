@@ -16,8 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ajedrez.model.Assistance;
+import com.example.ajedrez.model.Lesson;
 import com.example.ajedrez.model.Student;
-import com.example.ajedrez.network.Network;
+import com.example.ajedrez.network.NetworkManager;
 import com.example.ajedrez.network.Observer;
 import com.example.ajedrez.R;
 import com.example.ajedrez.utils.AlertsManager;
@@ -42,8 +43,12 @@ public class StudentsAssistListFragment extends BaseFragment implements Observer
     private View view;
 
     //==============================================================================================
-    // Properties
+    // Constructors
     //==============================================================================================
+
+    public StudentsAssistListFragment() {
+        this.assistanceList = new ArrayList<>();
+    }
 
     public static StudentsAssistListFragment newInstance() {
         return new StudentsAssistListFragment();
@@ -60,7 +65,13 @@ public class StudentsAssistListFragment extends BaseFragment implements Observer
         recyclerView = view.findViewById(R.id.studentsAssistanceList);
         FloatingActionButton saveAssistance = view.findViewById(R.id.saveAssistance);
         saveAssistance.setOnClickListener(v -> saveAssistance());
-        assistanceList = Network.getInstance().getAssistance();
+        if (NetworkManager.getInstance().getAssistance().size() == 0) {
+            for (Student student : NetworkManager.getInstance().getStudentList()) {
+                assistanceList.add(new Assistance(student));
+            }
+        } else {
+            assistanceList = NetworkManager.getInstance().getAssistance();
+        }
         return view;
     }
 
@@ -86,16 +97,16 @@ public class StudentsAssistListFragment extends BaseFragment implements Observer
     @Override
     public void onResume() {
         super.onResume();
-        Network.getInstance().attachStudentObserver(this);
-        Network.getInstance().attachAssistanceObserver(this);
+        NetworkManager.getInstance().attachStudentObserver(this);
+        NetworkManager.getInstance().attachAssistanceObserver(this);
         hideKeyboardFrom(requireContext(), view);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Network.getInstance().detachStudentObserver(this);
-        Network.getInstance().detachAssistanceObserver(this);
+        NetworkManager.getInstance().detachStudentObserver(this);
+        NetworkManager.getInstance().detachAssistanceObserver(this);
     }
 
     //==============================================================================================
@@ -199,11 +210,11 @@ public class StudentsAssistListFragment extends BaseFragment implements Observer
 
     private void updateAssistanceList() {
         if (assistanceList.size() > 0) {
-            assistanceList = Network.getInstance().getAssistance();
+            assistanceList = NetworkManager.getInstance().getAssistance();
             loadAssistanceList();
-            if (assistanceList.size() < Network.getInstance().getStudentList().size()) {
+            if (assistanceList.size() < NetworkManager.getInstance().getStudentList().size()) {
                 Student tempStudent = null;
-                for (Student student : Network.getInstance().getStudentList()) {
+                for (Student student : NetworkManager.getInstance().getStudentList()) {
                     for (Assistance assistance : assistanceList) {
                         if (student.getId().equals(assistance.getStudent().getId())) {
                             tempStudent = student;
@@ -217,11 +228,11 @@ public class StudentsAssistListFragment extends BaseFragment implements Observer
                 }
                 loadAssistanceList();
             } else {
-                assistanceList = Network.getInstance().getAssistance();
+                assistanceList = NetworkManager.getInstance().getAssistance();
                 loadAssistanceList();
             }
         } else {
-            for (Student student : Network.getInstance().getStudentList()) {
+            for (Student student : NetworkManager.getInstance().getStudentList()) {
                 assistanceList.add(new Assistance(student));
             }
             loadAssistanceList();
@@ -235,7 +246,8 @@ public class StudentsAssistListFragment extends BaseFragment implements Observer
     }
 
     private void saveAssistance() {
-        Network.getInstance().saveAssistance(assistanceList,
+        Lesson lesson = new Lesson(System.currentTimeMillis(),assistanceList);
+        NetworkManager.getInstance().saveTodayAttendance(lesson,
                 //onComplete
                 () -> AlertsManager.getInstance().showAlertDialog(null,
                         getString(R.string.successful),
@@ -252,6 +264,7 @@ public class StudentsAssistListFragment extends BaseFragment implements Observer
 
     @Override
     public void update() {
+        assistanceList = NetworkManager.getInstance().getAssistance();
         updateAssistanceList();
     }
 }

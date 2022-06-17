@@ -17,10 +17,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.ajedrez.model.Lesson;
 import com.example.ajedrez.model.Student;
 import com.example.ajedrez.R;
+import com.example.ajedrez.network.NetworkManager;
 import com.example.ajedrez.utils.DownloadManager;
 import com.example.ajedrez.utils.GenericMethodsManager;
 import com.example.ajedrez.view.assistance.StudentsAssistListFragment;
 import com.example.ajedrez.view.assistance.StudentsAssistanceListener;
+import com.example.ajedrez.view.lessons.LessonEditFragment;
 import com.example.ajedrez.view.lessons.LessonInfoFragment;
 import com.example.ajedrez.view.lessons.LessonsListFragment;
 import com.example.ajedrez.view.students.InfoStudentFragment;
@@ -32,7 +34,7 @@ import com.example.ajedrez.view.subjects.SubjectReaderFragment;
 import com.example.ajedrez.view.subjects.SubjectsListFragment;
 import com.example.ajedrez.view.subjects.SubjectsListFragment.SubjectsListener;
 import com.example.ajedrez.view.students.StudentUpdatedListener;
-import com.example.ajedrez.view.lessons.LessonInfoFragment.LessonInfoListener;
+import com.example.ajedrez.view.lessons.LessonInfoListener;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
@@ -40,6 +42,10 @@ import com.google.firebase.FirebaseApp;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, StudentsAssistanceListener,
         StudentsListener, LessonsListener, SubjectsListener, StudentUpdatedListener, LessonInfoListener {
+
+    //==============================================================================================
+    // Lifecycle
+    //==============================================================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    //==============================================================================================
+    // Events
+    //==============================================================================================
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -76,13 +93,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
@@ -104,7 +114,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -129,6 +138,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    //==============================================================================================
+    // Load fragments
+    //==============================================================================================
+
     private void showAssistanceFragment () {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -139,6 +152,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showStudentsFragment () {
+        //NetworkManager.getInstance().updateupdateupdate();
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
@@ -165,6 +179,24 @@ public class MainActivity extends AppCompatActivity
                 .commitAllowingStateLoss();
     }
 
+    //==============================================================================================
+    // SubjectsListener
+    //==============================================================================================
+
+    @Override
+    public void showSubjectReader(String fileName) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.content_container, SubjectReaderFragment.newInstance(fileName))
+                .commitAllowingStateLoss();
+    }
+
+    //==============================================================================================
+    // StudentsListener
+    //==============================================================================================
+
     @Override
     public void showAddStudentScreen() {
         getSupportFragmentManager()
@@ -185,6 +217,10 @@ public class MainActivity extends AppCompatActivity
                 .commitAllowingStateLoss();
     }
 
+    //==============================================================================================
+    // LessonsListener
+    //==============================================================================================
+
     @Override
     public void showLessonInfoScreen(Lesson lesson) {
         getSupportFragmentManager()
@@ -195,30 +231,40 @@ public class MainActivity extends AppCompatActivity
                 .commitAllowingStateLoss();
     }
 
+    //==============================================================================================
+    // StudentUpdatedListener
+    //==============================================================================================
+
     @Override
     public void returnToList() {
         showStudentsFragment();
     }
+
+    //==============================================================================================
+    // StudentsAssistanceListener
+    //==============================================================================================
 
     @Override
     public void onAssistanceItemClick() {
         hideKeyboard(this);
     }
 
-    @Override
-    public void showSubjectReader(String fileName) {
+    //==============================================================================================
+    // LessonInfoListener
+    //==============================================================================================
+
+    public void showEditLesson(Lesson lesson){
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
-                .replace(R.id.content_container, SubjectReaderFragment.newInstance(fileName))
+                .replace(R.id.content_container, LessonEditFragment.Companion.newInstance(lesson, this))
                 .commitAllowingStateLoss();
     }
 
-    @Override
-    public void showStudentInfo(){
-
-    }
+    //==============================================================================================
+    // Methods
+    //==============================================================================================
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);

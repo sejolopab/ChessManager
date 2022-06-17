@@ -1,9 +1,7 @@
 package com.example.ajedrez.utils;
 
 import android.content.Context;
-
 import androidx.appcompat.app.AlertDialog;
-
 import com.example.ajedrez.R;
 
 public class AlertsManager {

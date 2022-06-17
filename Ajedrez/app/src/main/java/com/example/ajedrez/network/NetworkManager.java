@@ -14,19 +14,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class Network implements StudentNotifications, AssistanceNotifications, LessonsNotifications {
+public class NetworkManager implements StudentNotifications, AssistanceNotifications, LessonsNotifications {
 
     //==============================================================================================
     // Properties
     //==============================================================================================
 
-    private static Network instance = new Network();
+    private static NetworkManager instance = new NetworkManager();
     private static final List<Student> studentList = new ArrayList<>();
+    private static final List<Lesson> lessonsList = new ArrayList<>();
     private static List<Assistance> assistanceList = new ArrayList<>();
-    private static List<Lesson> lessonsList = new ArrayList<>();
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private final DatabaseReference assistanceRef = database.getReference("assistance");
     public final DatabaseReference studentsRef = database.getReference("students");
@@ -37,15 +36,15 @@ public class Network implements StudentNotifications, AssistanceNotifications, L
     // Constructors
     //==============================================================================================
 
-    public Network() {
+    public NetworkManager() {
         loadAssistance();
         loadStudents();
         loadLessons();
     }
 
-    public static Network getInstance() {
+    public static NetworkManager getInstance() {
         if(instance == null){
-            instance = new Network();
+            instance = new NetworkManager();
         }
         return instance;
     }
@@ -53,6 +52,13 @@ public class Network implements StudentNotifications, AssistanceNotifications, L
     //==============================================================================================
     // Requests
     //==============================================================================================
+
+    public void updateupdateupdate() {
+        for (Student student : studentList) {
+            //student.setLastAttendance(Utils.Companion.getLongTimeStamp(student.getLastClass()));
+            studentsRef.child(student.getId()).setValue(student);
+        }
+    }
 
     private void loadAssistance() {
         Query studentsQuery = assistanceRef.child(todayDate);
@@ -63,8 +69,8 @@ public class Network implements StudentNotifications, AssistanceNotifications, L
                 Lesson value = dataSnapshot.getValue(Lesson.class);
                 if (value != null) {
                     assistanceList = value.getAssistance();
+                    notifyUpdateAssistanceObservers();
                 }
-                notifyUpdateAssistanceObservers();
             }
 
             @Override
@@ -75,17 +81,18 @@ public class Network implements StudentNotifications, AssistanceNotifications, L
     }
 
     private void loadStudents() {
-        studentsRef.addValueEventListener(new ValueEventListener() {
+        studentsRef.orderByChild("lastAttendance").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 studentList.clear();
                 for(DataSnapshot data :dataSnapshot.getChildren()){
-                    Student newStudent = data.getValue(Student.class);
-                    if (newStudent == null || !newStudent.getActive())
+                    Student student = data.getValue(Student.class);
+                    if (student == null || !student.getActive())
                         continue;
-                    newStudent.setId(data.getKey());
-                    studentList.add(newStudent);
+                    student.setId(data.getKey());
+                    studentList.add(0, student);
                 }
+
                 notifyUpdateStudentObservers();
             }
             @Override
@@ -104,7 +111,7 @@ public class Network implements StudentNotifications, AssistanceNotifications, L
                     Lesson value = lesson.getValue(Lesson.class);
                     lessonsList.add(0, value);
                 }
-                notifyUpdateStudentObservers();
+                notifyUpdateLessonsObservers();
             }
 
             @Override
@@ -114,9 +121,9 @@ public class Network implements StudentNotifications, AssistanceNotifications, L
         });
     }
 
-    public void saveAssistance(List<Assistance> newAssistance, Runnable onComplete, Runnable onError) {
-        Lesson lesson = new Lesson(Utils.Companion.getLongTimeStamp(), newAssistance);
-        assistanceRef.child(todayDate).setValue(lesson, (databaseError, databaseReference) -> {
+    public void updateAttendance(Lesson lesson, Long oldDate, Runnable onComplete, Runnable onError) {
+        /*assistanceRef.child(String.valueOf(lesson.getDate())).setValue(lesson,
+                (databaseError, databaseReference) -> {
             if (databaseError != null) {
                 onError.run();
             } else {
@@ -124,14 +131,24 @@ public class Network implements StudentNotifications, AssistanceNotifications, L
             }
         });
 
-        for (Assistance studentAssistance : assistanceList) {
-            if (studentAssistance.getAssisted() != null) {
-                if (studentAssistance.getAssisted()) {
-                    studentAssistance.getStudent().setLastClass(todayDate);
-                    studentsRef.child(studentAssistance.getStudent().getId())
-                            .setValue(studentAssistance.getStudent());
-                }
+        if (lesson.getDate() > oldDate) {
+            //update students lastclass
+        }*/
+    }
+
+    public void saveTodayAttendance(Lesson newLesson, Runnable onComplete, Runnable onError) {
+        assistanceRef.child(todayDate).setValue(newLesson, (databaseError, databaseReference) -> {
+            if (databaseError != null) {
+                onError.run();
+            } else {
+                onComplete.run();
             }
+        });
+
+        for (Assistance studentAssistance : newLesson.getStudents()) {
+            Student student = studentAssistance.getStudent();
+            student.setLastAttendance(newLesson.getDate());
+            studentsRef.child(student.getId()).setValue(student);
         }
     }
 

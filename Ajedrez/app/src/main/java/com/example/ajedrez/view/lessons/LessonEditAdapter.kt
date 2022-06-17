@@ -6,32 +6,30 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ajedrez.model.Assistance
-import com.example.ajedrez.model.Student
 import com.example.ajedrez.R
 
-class LessonEditAdapter internal constructor(private var mStudents: List<Student>,
-                                             private val mListener: LessonEditFragment.EditLessonListener?
-) : RecyclerView.Adapter<LessonEditAdapter.LessonEditViewHolder>() {
+class LessonEditAdapter internal constructor(private var assistanceList: List<Assistance>) :
+    RecyclerView.Adapter<LessonEditAdapter.LessonEditViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonEditViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_student_item, parent, false)
+            .inflate(R.layout.fragment_assistance_item, parent, false)
         return LessonEditViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: LessonEditViewHolder, position: Int) {
-        holder.name.text = "prueba"//mStudents[position].student?.name ?: ""
+        holder.name.text = assistanceList[position].student?.name ?: "Error"
     }
 
     override fun getItemCount(): Int {
-        return mStudents.size
+        return assistanceList.size
     }
 
     fun setStudentsList(studentList: List<Assistance>) {
-        //Jeank Feo
+        this.assistanceList = studentList
     }
 
-    inner class LessonEditViewHolder internal constructor(val mView: View) : RecyclerView.ViewHolder(mView) {
+    inner class LessonEditViewHolder internal constructor(mView: View) : RecyclerView.ViewHolder(mView) {
 
         val name: TextView = mView.findViewById(R.id.studentNameTextView)
 

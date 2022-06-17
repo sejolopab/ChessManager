@@ -1,7 +1,5 @@
 package com.example.ajedrez.model
 
-import java.util.*
-
 class Assistance {
     var assisted: Boolean? = null
     var student: Student? = null

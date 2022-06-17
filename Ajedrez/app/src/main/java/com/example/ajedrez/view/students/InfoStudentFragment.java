@@ -16,10 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.example.ajedrez.model.Student;
-import com.example.ajedrez.network.Network;
+import com.example.ajedrez.network.NetworkManager;
 import com.example.ajedrez.R;
 import com.example.ajedrez.utils.AlertsManager;
 import com.example.ajedrez.utils.GenericMethodsManager;
+import com.example.ajedrez.utils.Utils;
 import com.example.ajedrez.view.BaseFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -115,14 +116,14 @@ public class InfoStudentFragment extends BaseFragment {
         firstClass.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 mStudent.setStartingDate(s.toString());
-                mStudent.setLastClass(s.toString());
+                mStudent.setLastAttendance(Utils.Companion.getLongTimeStamp(s.toString()));
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
         AppCompatEditText lastClass = view.findViewById(R.id.lastClassText);
-        lastClass.setText(mStudent.getLastClass());
+        lastClass.setText(Utils.Companion.getStringTimeStamp(mStudent.getLastAttendance()));
 
         CheckBox isActiveCheckbox = view.findViewById(R.id.isActiveCheckBox);
         isActiveCheckbox.setChecked(mStudent.getActive());
@@ -173,7 +174,7 @@ public class InfoStudentFragment extends BaseFragment {
     //==============================================================================================
 
     private void deleteStudent(){
-        Network.getInstance().deleteStudent(mStudent,
+        NetworkManager.getInstance().deleteStudent(mStudent,
                 //onComplete
                 ()-> AlertsManager.getInstance().showAlertDialogWithAction(null,
                         getString(R.string.successful),
@@ -195,7 +196,7 @@ public class InfoStudentFragment extends BaseFragment {
             return;
         }
 
-        Network.getInstance().updateStudent(mStudent,
+        NetworkManager.getInstance().updateStudent(mStudent,
                 //onComplete
                 ()-> AlertsManager.getInstance().showAlertDialog(null,
                         getString(R.string.successful),
