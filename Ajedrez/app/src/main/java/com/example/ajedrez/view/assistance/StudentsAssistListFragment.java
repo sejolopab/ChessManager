@@ -226,17 +226,15 @@ public class StudentsAssistListFragment extends BaseFragment implements Observer
                         saveAssistance();
                     }
                 }
-                loadAssistanceList();
             } else {
                 assistanceList = NetworkManager.getInstance().getAssistance();
-                loadAssistanceList();
             }
         } else {
             for (Student student : NetworkManager.getInstance().getStudentList()) {
                 assistanceList.add(new Assistance(student));
             }
-            loadAssistanceList();
         }
+        loadAssistanceList();
     }
 
     private void loadAssistanceList(){
