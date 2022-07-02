@@ -12,17 +12,26 @@
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/drawable/ic_save.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/drawable/ic_settings.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout-v23/fragment_info_student.xml" value="0.20572916666666666" />
+        <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/activity_login.xml" value="0.1890625" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/activity_main.xml" value="0.2390625" />
+        <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/activity_user.xml" value="0.1" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/app_bar_main.xml" value="0.2390625" />
+        <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/content_login.xml" value="0.1890625" />
+        <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/content_main.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/content_user.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_assistance_item.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_assistance_list.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_first.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_info_student.xml" value="0.3856794141578519" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_lesson_edit.xml" value="0.23143115942028986" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_lesson_info.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_lesson_info_item.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_lessons_item.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_lessons_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_login.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_new_student.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_register.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_second.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_student_item.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/layout/fragment_student_list.xml" value="0.23143115942028986" />
         <entry key="..\:/Users/sejol/Documents/GitHub/ChessManager/Ajedrez/app/src/main/res/menu/activity_main_drawer.xml" value="0.2390625" />
