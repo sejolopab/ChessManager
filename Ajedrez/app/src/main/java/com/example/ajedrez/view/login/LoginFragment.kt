@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.ajedrez.R
 import com.google.firebase.auth.FirebaseAuth
@@ -70,16 +71,14 @@ class LoginFragment : Fragment() {
     }
 
     private fun login(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val document = task.result
-                if (document != null) {
-                    Log.d(TAG, "DocumentSnapshot data: " + task.result)
-                } else {
-                    Log.d(TAG, "No such document")
-                }
+                Log.d(TAG, "signInWithEmail:success")
+                val user = auth.currentUser
+                //updateUI(user)
             } else {
-                Log.d(TAG, "get failed with ", task.exception)
+                Log.w(TAG, "signInWithEmail:failure", task.exception)
+                //updateUI(null)
             }
         }
     }
