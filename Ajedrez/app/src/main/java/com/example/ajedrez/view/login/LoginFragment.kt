@@ -1,22 +1,35 @@
 package com.example.ajedrez.view.login
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
+import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
 import com.example.ajedrez.R
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class LoginFragment : Fragment() {
+
+    private lateinit var usernameEt: EditText
+    private lateinit var passwordEt: EditText
+    private lateinit var loginBtn: Button
+    private lateinit var loading: ProgressBar
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,135 +38,61 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         val view = inflater.inflate(R.layout.fragment_login, container, false)
-        val username: EditText = view.findViewById(R.id.usernameET)
-        val password: EditText = view.findViewById(R.id.passwordET)
-        val login: EditText = view.findViewById(R.id.loginBTN)
-        val loading: EditText = view.findViewById(R.id.loading)
+        usernameEt = view.findViewById(R.id.usernameET)
+        passwordEt = view.findViewById(R.id.passwordET)
+        loginBtn = view.findViewById(R.id.loginBTN)
+        loading = view.findViewById(R.id.loading)
 
-        username.afterTextChanged {
+        usernameEt.afterTextChanged {
             loginDataChanged(
-                username.text.toString(),
-                password.text.toString()
+                usernameEt.text.toString(),
+                passwordEt.text.toString()
             )
         }
 
-        password.apply {
-            afterTextChanged {
-                loginDataChanged(
-                    username.text.toString(),
-                    password.text.toString()
-                )
-            }
-
-            setOnEditorActionListener { _, actionId, _ ->
-                when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->
-                        login(
-                            username.text.toString(),
-                            password.text.toString()
-                        )
-                }
-                false
-            }
-
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                login(username.text.toString(), password.text.toString())
-            }
-        }
-
-        /*val username = view.findViewById(R.id.username)
-        val password = binding.password
-        val login = binding.login
-        val loading = binding.loading
-
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
-
-        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
-            val loginState = it ?: return@Observer
-
-            // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
-
-            if (loginState.usernameError != null) {
-                username.error = getString(loginState.usernameError)
-            }
-            if (loginState.passwordError != null) {
-                password.error = getString(loginState.passwordError)
-            }
-        })
-
-        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
-            val loginResult = it ?: return@Observer
-
-            loading.visibility = View.GONE
-            if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
-            }
-            if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
-            }
-            setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
-        })
-
-        username.afterTextChanged {
-            loginViewModel.loginDataChanged(
-                username.text.toString(),
-                password.text.toString()
+        passwordEt.afterTextChanged {
+            loginDataChanged(
+                usernameEt.text.toString(),
+                passwordEt.text.toString()
             )
         }
 
-        password.apply {
-            afterTextChanged {
-                loginViewModel.loginDataChanged(
-                    username.text.toString(),
-                    password.text.toString()
-                )
-            }
+        loginBtn.setOnClickListener {
+            login(
+                usernameEt.text.toString(),
+                passwordEt.text.toString()
+            )
+        }
 
-            setOnEditorActionListener { _, actionId, _ ->
-                when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString()
-                        )
-                }
-                false
-            }
+        auth = Firebase.auth
 
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
-            }
-        }*/
         return view
     }
 
-    fun login(username: String, password: String) {
-
-    }
-
-    private fun loginDataChanged(username: String, password: String) {
-        if (!isUserNameValid(username)) {
-            //1
-        } else if (!isPasswordValid(password)) {
-            //2
-        } else {
-            //3
+    private fun login(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                if (document != null) {
+                    Log.d(TAG, "DocumentSnapshot data: " + task.result)
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            } else {
+                Log.d(TAG, "get failed with ", task.exception)
+            }
         }
     }
 
-    // A placeholder username validation check
+    private fun loginDataChanged(username: String, password: String) {
+        loginBtn.isEnabled = !(!isUserNameValid(username) || !isPasswordValid(password))
+    }
+
     private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
+        return if (TextUtils.isEmpty(username)) {
+            false
         } else {
-            username.isNotBlank()
+            Patterns.EMAIL_ADDRESS.matcher(username).matches()
         }
     }
 
@@ -165,7 +104,7 @@ class LoginFragment : Fragment() {
     /**
      * Extension function to simplify setting an afterTextChanged action to EditText components.
      */
-    fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+    private fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
         this.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
                 afterTextChanged.invoke(editable.toString())
@@ -175,5 +114,15 @@ class LoginFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
+    }
+
+    //==============================================================================================
+    // Methods
+    //==============================================================================================
+
+    companion object {
+        fun newInstance(): LoginFragment {
+            return LoginFragment()
+        }
     }
 }
